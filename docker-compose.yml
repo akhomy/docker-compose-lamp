@@ -93,7 +93,7 @@ services:
             SERVER_ROOT: /var/www/localhost/htdocs
             SERVER_NAME: localhost
             CLIENT_MAX_BODY_SIZE: 32m
-            PROXY_PASS: http://apache2_mpm:8080
+            PROXY_PASS: http://apache2_mpm:80
         ports:
             - "8005:80"
         volumes_from:
