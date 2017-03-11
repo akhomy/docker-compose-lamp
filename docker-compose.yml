@@ -72,9 +72,9 @@ services:
                 ipv4_address: 172.55.0.5
         environment:
             PROXY_PASS: fcgi://php-fpm:7000/var/www/localhost/htdocs
-            APACHE_LISTEN_PORT: 8080
-#        ports:
-#            - "8004:8080"
+            APACHE_LISTEN_PORT: 80
+        ports:
+            - "8004:80"
         volumes_from:
             - php-fpm   
             
