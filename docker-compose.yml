@@ -110,6 +110,16 @@ services:
                 ipv4_address: 172.55.0.7
         ports:
             - "8006:8025"
+
+    ngrok:
+        image: lordius/alpine-ngrok
+        networks:
+            stack_net:
+                ipv4_address: 172.55.0.8
+        ports:
+            - "4040:4040"
+        environment:
+            ARGS: http 172.53.0.6:80
             
 networks:
   stack_net:
