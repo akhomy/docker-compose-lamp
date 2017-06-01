@@ -58,6 +58,8 @@ services:
         volumes:
             - ./htdocs:/var/www/localhost/htdocs
             - ./crontasks.txt:/home/crontasks.txt
+        extra_hosts:
+            - "docker.lamp:172.53.0.6" 
         
     apache2_mpm:
         links:
