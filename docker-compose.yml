@@ -34,9 +34,9 @@ services:
     php-fpm:
         links:
             - mysql
-# Pls, check image tags, latest is php 7, but we have php-5.6.29            
+# Pls, check image tags, latest is php-7, but we have php-5         
         image: lordius/alpine-php_fpm
-#        image: lordius/alpine-php_fpm:php-5.6.29
+#        image: lordius/alpine-php_fpm:php-5
         networks:
             stack_net:
                 ipv4_address: 172.55.0.4
