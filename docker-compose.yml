@@ -40,9 +40,6 @@ services:
         networks:
             stack_net:
                 ipv4_address: 172.55.0.4
-        depends_on:
-            - mysql
-            - mailhog
         environment:
             CRONTAB_ENABLED: 0
             PHP_FPM_PORT: 7000
@@ -66,9 +63,6 @@ services:
     apache2_mpm:
         links:
             - php-fpm   
-        depends_on:
-            - mysql 
-            - php-fpm
         image: lordius/alpine-apache
         networks:
             stack_net:
@@ -84,8 +78,6 @@ services:
     nginx:
         links:
             - apache2_mpm   
-        depends_on:
-            - apache2_mpm
         image: lordius/alpine-nginx
         networks:
             stack_net:
