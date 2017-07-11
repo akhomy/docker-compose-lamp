@@ -7,6 +7,7 @@ Run as usual, inside folder with docker-compose.yml: <code>docker-compose up -d<
 ### Special info
 <p>This example include php5-fpm, nginx(optional), apache2 mpm, mysql, mailhog, phpmyadmin.</p>
 <p>You could view site info with <strong>NGINX</strong> by link http://locahost:8005/info.php or by ip http://172.55.0.6/info.php</p>
+<p> Also, you could enable selenium, for this pls check docker-compose.yml and uncomment info related selenium.</p>
 <p>You could view site info with <strong>Apache2-MPM</strong> by link http://locahost:8004/info.php or by ip http://172.55.0.5/info.php</p>
 <p> <strong>PhpMyAdmin</strong> is available under http://172.55.0.3</p>
 <p> <strong>MailHog</strong> is available under http://172.55.0.7:8025 </p>
