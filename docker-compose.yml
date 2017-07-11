@@ -39,6 +39,7 @@ services:
             - mysql
         depends_on:
             - mysql
+#            - selenium
         volumes:
             - ./htdocs:/var/www/localhost/htdocs
             - ./crontasks.txt:/home/crontasks.txt
@@ -132,19 +133,19 @@ services:
             stack_net:
                 ipv4_address: 172.11.0.9
 
-    selenium:
-        image: selenium/standalone-firefox-debug:2.48.2
-        links:
-            - php-fpm
-        ports:
-            - "4444"
-            - "5900"
-        cap_add:
-            - NET_ADMIN
-            - NET_RAW
-        networks:
-            stack_net:
-                ipv4_address: 172.11.0.10
+#    selenium:
+#        image: selenium/standalone-firefox-debug:2.48.2
+#        links:
+#            - php-fpm
+#        ports:
+#            - "4444"
+#            - "5900"
+#        cap_add:
+#            - NET_ADMIN
+#            - NET_RAW
+#        networks:
+#            stack_net:
+#                ipv4_address: 172.11.0.10
             
 networks:
   stack_net:
