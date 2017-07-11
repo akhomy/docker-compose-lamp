@@ -125,20 +125,6 @@ services:
         networks:
             stack_net:
                 ipv4_address: 172.55.0.8
-
-#    selenium:
-#        image: selenium/standalone-firefox:2.48.2
-#        links:
-#           - php-fpm
-#        ports:
-#           - "4444"
-#           - "5900"
-#        cap_add:
-#           - NET_ADMIN
-#           - NET_RAW
-#        networks:
-#            stack_net:
-#                ipv4_address: 172.55.0.9
             
 networks:
   stack_net:
