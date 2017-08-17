@@ -16,9 +16,9 @@ The LAMP stack consists of the following containers:
 | --------- | -------- | ------------ | ----- | ------------------ |
 | MariaDB                   | 10.0               | mariadb   | [mariadb]                                    | ✓ |
 | PhpMyAdmin                | latest             | pma       | [phpmyadmin/phpmyadmin]                      | ✓ |
-| PHP-FPM                   | latest             | php       | [lordius/alpine-php_fpm]                     | ✓ |
+| PHP-FPM                   | php-7, php-5       | php       | [lordius/alpine-php_fpm]                     | ✓ |
 | Apache                    | latest             | apache    | [lordius/alpine-apache]                      | ✓ |
-| Nginx                     | php-7, php-5       | nginx     | [lordius/alpine-nginx]                       | ✓ |
+| Nginx                     | latest             | nginx     | [lordius/alpine-nginx]                       | ✓ |
 | Mailhog                   | latest             | mailhog   | [lordius/alpine-mailhog]                     | ✓ |
 | NGROK                     | latest             | ngrok     | [lordius/alpine-ngrok]                       | ✓ |
 | PHP-FPM-DATA              | php-7, php-5       | php-fpm   | [lordius//alpine-php_fpm]                    |   |
