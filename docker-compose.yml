@@ -127,11 +127,11 @@ services:
             stack_net:
                 ipv4_address: 172.55.0.8
 
-    php-fpm-data:
-        image: lordius/alpine-php_fpm
-        networks:
-            stack_net:
-                ipv4_address: 172.11.0.9
+#    php-fpm-data:
+#        image: lordius/alpine-php_fpm
+#        networks:
+#            stack_net:
+#                ipv4_address: 172.11.0.9
 
 #    selenium:
 #        image: selenium/standalone-firefox-debug:2.48.2
