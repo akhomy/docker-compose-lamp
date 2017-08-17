@@ -16,7 +16,7 @@ services:
         networks:
             stack_net:
                 ipv4_address: 172.55.0.2
-      
+
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
         depends_on:
@@ -30,9 +30,9 @@ services:
         networks:
             stack_net:
                 ipv4_address: 172.55.0.3
-    
+
     php-fpm:
-# Pls, check image tags, latest is php-7, but we have php-5 too.        
+# Pls, check image tags, latest is php-7, but we have php-5 too.
         image: lordius/alpine-php_fpm
 #        image: lordius/alpine-php_fpm:php-5
 #        image: lordius/alpine-php_fpm:php-7
@@ -63,7 +63,7 @@ services:
                 ipv4_address: 172.55.0.4
         extra_hosts:
             - "docker.lamp:172.55.0.6" 
-        
+
     apache2_mpm:
         image: lordius/alpine-apache
         links:
@@ -80,7 +80,7 @@ services:
         networks:
             stack_net:
                 ipv4_address: 172.55.0.5
-            
+
     nginx:
         image: lordius/alpine-apache
         links:
@@ -133,7 +133,7 @@ services:
 #        networks:
 #            stack_net:
 #                ipv4_address: 172.11.0.9
-
+#
 #    selenium:
 #        image: selenium/standalone-firefox-debug:2.48.2
 #        links:
@@ -147,7 +147,7 @@ services:
 #        networks:
 #            stack_net:
 #                ipv4_address: 172.11.0.10
-            
+
 networks:
   stack_net:
     driver: bridge
