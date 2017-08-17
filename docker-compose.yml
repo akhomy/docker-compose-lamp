@@ -35,6 +35,7 @@ services:
 # Pls, check image tags, latest is php-7, but we have php-5 too.        
         image: lordius/alpine-php_fpm
 #        image: lordius/alpine-php_fpm:php-5
+#        image: lordius/alpine-php_fpm:php-7
         links:
             - mysql
         depends_on:
