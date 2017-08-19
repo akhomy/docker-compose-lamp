@@ -29,13 +29,13 @@ The LAMP stack consists of the following containers:
 Install Docker (Linux, Docker for Mac or Docker for Windows (10+ Pro)). For Linux additionally install docker compose.
 
 ##  Introduction
-Run as usual, inside folder with **docker-compose.yml**: `docker-compose up -d`
+Run inside folder with **docker-compose.yml**: `docker-compose up -d`
 
 To view **PHP** info with **NGINX** use a link or IP: **http://locahost:8005/info.php**, **http://172.55.0.6/info.php**.
 
 To view **PHP** info with **Apache2 in MPM mode** use a link or IP: **http://locahost:8004/info.php**, **http://172.55.0.5/info.php**.
 
-To enable **Selenium**, for this pls, check **docker-compose.yml** and uncomment related **selenium** and **php-fpm-data** sections.
+To enable **Selenium** check **docker-compose.yml** and uncomment related **selenium** and **php-fpm-data** sections.
 
 **PhpMyAdmin** is available under **http://172.55.0.3**
 
