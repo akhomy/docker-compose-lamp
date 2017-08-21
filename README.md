@@ -45,6 +45,12 @@ To enable **Selenium** check **docker-compose.yml** and uncomment related **sele
 
 For running multiple instances on your local machine you could update IP range or port inside **docker-compose.yml**. For this, on your instance change IPs to another range, e.g. from `172.55` to `172.54.*`. The same is for ports.
 
+You could edit your hosts file for accessing via domain name by adding lines:
+`172.55.0.3 phpmyadmin.dockerlamp`
+`172.55.0.6 site.dockerlamp`
+`172.55.0.7 mailhog.dockerlamp`
+`172.55.0.8 ngrok.dockerlamp`
+
 ## Documentation
 See READMEs for more details about every image
 
