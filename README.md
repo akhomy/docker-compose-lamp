@@ -10,7 +10,6 @@ Based on the docker Alpine image, built to be fast, small and extendable LAMP st
 * [MailHog](https://github.com/a-kom/alpine-mailhog)
 * [StandaloneFirefoxDebug](https://github.com/SeleniumHQ/docker-selenium/tree/master/StandaloneFirefoxDebug)
 
-
 The LAMP stack consists of the following containers:
 
 | Container | Versions | Service name | Image | Enabled by default |
