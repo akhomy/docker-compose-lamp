@@ -55,7 +55,7 @@ You could edit your hosts file for accessing via domain name by adding lines:
 `172.55.0.8 ngrok.dockerlamp`
 
 ## Documentation
-See READMEs for more details about every image
+See READMEs for more details, like environment variables for image
 
 * [PhpMyAdmin](https://github.com/phpmyadmin/docker/blob/master/README.md)
 * [PHP-FPM](https://github.com/a-kom/alpine-php_fpm/blob/master/README.md)
