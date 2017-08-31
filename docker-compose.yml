@@ -158,7 +158,7 @@ services:
 #        working_dir: /usr/src/app
 #        expose:
 #        - "3000"
-#        command: ash -c "DEBUG=htdocs:* npm start"
+#        command: ash -c "PORT=3000 DEBUG=htdocs:* npm start"
 #        networks:
 #            stack_net:
 #                ipv4_address: 172.55.0.11
