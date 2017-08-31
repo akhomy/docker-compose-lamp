@@ -132,7 +132,7 @@ services:
 #        image: lordius/alpine-php_fpm
 #        networks:
 #            stack_net:
-#                ipv4_address: 172.11.0.9
+#                ipv4_address: 172.55.0.9
 #
 #    selenium:
 #        image: selenium/standalone-firefox-debug:2.48.2
@@ -146,7 +146,22 @@ services:
 #            - NET_RAW
 #        networks:
 #            stack_net:
-#                ipv4_address: 172.11.0.10
+#                ipv4_address: 172.55.0.10
+
+##Node example, based on node express.
+#    node:
+#        image: node:8.4.0-alpine
+#        environment:
+#        - NODE_ENV=production
+#        volumes:
+#            - ./htdocs:/usr/src/app
+#        working_dir: /usr/src/app
+#        expose:
+#        - "3000"
+#        command: ash -c "DEBUG=htdocs:* npm start"
+#        networks:
+#            stack_net:
+#                ipv4_address: 172.55.0.11
 
 networks:
   stack_net:
