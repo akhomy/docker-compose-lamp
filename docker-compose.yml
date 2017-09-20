@@ -162,6 +162,17 @@ services:
 #        networks:
 #            stack_net:
 #                ipv4_address: 172.55.0.11
+#    mongo:
+#        image: mongo
+#        volumes:
+#          - ./docker-runtime/mongo:/var/lib/mongodb
+#        restart: always
+#        ports:
+#            - 27017:27017
+#        command: mongod --smallfiles --logpath=/dev/null # --quiet
+#        networks:
+#            stack_net:
+#                ipv4_address: 172.55.0.12
 
 networks:
   stack_net:
