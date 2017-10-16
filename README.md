@@ -38,23 +38,23 @@ To view **PHP** info with **Apache2 in MPM mode** use a link or IP: **http://loc
 
 To enable **Selenium** check **docker-compose.yml** and uncomment related **selenium** and **php-fpm-data** sections.
 
-**PhpMyAdmin** is available under **http://172.55.0.3**
+**PhpMyAdmin** is available under **http://172.55.0.2**
 
-**MailHog** is available under **http://172.55.0.7:8025**
+**MailHog** is available under **http://172.55.0.4:8025**
 
-**NGROK** is available under **http://172.55.0.8:4040**
+**NGROK** is available under **http://172.55.0.5:4040**
 
 For running multiple instances on your local machine you could update IP range or port inside **docker-compose.yml**. For this, on your instance change IPs to another range, e.g. from `172.55` to `172.54.*`. The same is for ports.
 
 You could edit your system host file for accessing containers via domain names by adding lines (or something like this based on your IP and domains, don't forget to change `extra_hosts` in `docker-compose.yml`):
 
-`172.55.0.3 phpmyadmin.dockerlamp`
+`172.55.0.2 phpmyadmin.dockerlamp`
 
-`172.55.0.6 site.dockerlamp`
+`172.55.0.3 site.dockerlamp`
 
-`172.55.0.7 mailhog.dockerlamp`
+`172.55.0.4 mailhog.dockerlamp`
 
-`172.55.0.8 ngrok.dockerlamp`
+`172.55.0.5 ngrok.dockerlamp`
 
 ## Documentation
 See READMEs for more details, like environment variables for image

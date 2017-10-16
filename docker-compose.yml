@@ -11,33 +11,19 @@ services:
         volumes:
             - ./docker-runtime/mysql/lib:/var/lib/mysql
         environment:
-            MYSQL_ROOT_PASSWORD: drupal
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_USER: root
+            MYSQL_PASSWORD: root
+            MYSQL_DATABASE: testdrive
         #command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci # The simple way to override the mariadb config.
         networks:
-            stack_net:
-                ipv4_address: 172.55.0.2
-
-    phpmyadmin:
-        image: phpmyadmin/phpmyadmin
-        depends_on:
-            - mysql
-        environment:
-            PMA_HOST: mysql
-            PHP_UPLOAD_MAX_FILESIZE: 1G
-            PHP_MAX_INPUT_VARS: 1G
-#        ports:
-#            - "8001:80"
-        networks:
-            stack_net:
-                ipv4_address: 172.55.0.3
+            - internal
 
     php-fpm:
 # Pls, check image tags, latest is php-7, but we have php-5 too.
         image: lordius/alpine-php_fpm
 #        image: lordius/alpine-php_fpm:php-5
 #        image: lordius/alpine-php_fpm:php-7
-        links:
-            - mysql
         depends_on:
             - mysql
 #            - selenium
@@ -59,15 +45,12 @@ services:
             PHP_ALWAYS_POPULATE_RAW_POST_DATA: -1
             PHP_MEMORY_LIMIT: 1024M
         networks:
-            stack_net:
-                ipv4_address: 172.55.0.4
+            - internal
         extra_hosts:
-            - "docker.dockerlamp:172.55.0.6" 
+            - "docker.dockerlamp:172.55.0.3" 
 
     apache2_mpm:
         image: lordius/alpine-apache
-        links:
-            - php-fpm
         depends_on:
             - php-fpm
         volumes_from:
@@ -75,16 +58,24 @@ services:
         environment:
             PROXY_PASS: fcgi://php-fpm:7000/var/www/localhost/htdocs
             APACHE_LISTEN_PORT: 80
-        ports:
-            - "8004:80"
         networks:
-            stack_net:
-                ipv4_address: 172.55.0.5
+            - internal
 
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        depends_on:
+            - mysql
+        environment:
+            PMA_HOST: mysql
+            PHP_UPLOAD_MAX_FILESIZE: 1G
+            PHP_MAX_INPUT_VARS: 1G
+        networks:
+            internal:
+            shared:
+                ipv4_address: 172.55.0.2
     nginx:
-        image: lordius/alpine-apache
-        links:
-            - apache2_mpm
+        image: lordius/alpine-nginx
         depends_on:
             - apache2_mpm
         volumes_from:
@@ -100,39 +91,32 @@ services:
             PROXY_READ_TIMEOUT: 3000
             SEND_TIMEOUT: 3000
             PROXY_PASS: http://apache2_mpm:80
-        ports:
-            - "8005:80"
         networks:
-            stack_net:
-                ipv4_address: 172.55.0.6
+          internal:
+          shared:
+              ipv4_address: 172.55.0.3
 
     mailhog:
         image: lordius/alpine-mailhog
-        links:
-            - php-fpm
         depends_on:
             - php-fpm
-        ports:
-            - "8006:8025"
         networks:
-            stack_net:
-                ipv4_address: 172.55.0.7
+          internal:
+          shared:
+             ipv4_address: 172.55.0.4
 
     ngrok:
         image: lordius/alpine-ngrok
         environment:
-            ARGS: http 172.53.0.6:80
-        ports:
-            - "4040:4040"
+            ARGS: http 172.53.0.4:80
         networks:
-            stack_net:
-                ipv4_address: 172.55.0.8
+            shared:
+                ipv4_address: 172.55.0.5
 
 #    php-fpm-data:
 #        image: lordius/alpine-php_fpm
 #        networks:
-#            stack_net:
-#                ipv4_address: 172.55.0.9
+#          - internal
 #
 #    selenium:
 #        image: selenium/standalone-firefox-debug:2.48.2
@@ -145,7 +129,7 @@ services:
 #            - NET_ADMIN
 #            - NET_RAW
 #        networks:
-#            stack_net:
+#            shared:
 #                ipv4_address: 172.55.0.10
 
 ##Node example, based on node express.
@@ -160,7 +144,8 @@ services:
 #        - "3000"
 #        command: ash -c "PORT=3000 DEBUG=htdocs:* npm start"
 #        networks:
-#            stack_net:
+#            internal:
+#            shared:
 #                ipv4_address: 172.55.0.11
 #    mongo:
 #        image: mongo
@@ -171,11 +156,16 @@ services:
 #            - 27017:27017
 #        command: mongod --smallfiles --logpath=/dev/null # --quiet
 #        networks:
-#            stack_net:
-#                ipv4_address: 172.55.0.12
+#            - internal
 
 networks:
-  stack_net:
+  internal:
+    driver_opts:
+      internal: "true"
+    driver: bridge      
+  shared:
+    driver_opts:
+      enable_ipv6: "true"
     driver: bridge
     ipam:
      config:
