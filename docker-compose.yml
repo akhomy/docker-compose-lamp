@@ -130,7 +130,7 @@ services:
 #            - NET_RAW
 #        networks:
 #            shared:
-#                ipv4_address: 172.55.0.10
+#                ipv4_address: 172.55.0.6
 
 ##Node example, based on node express.
 #    node:
@@ -146,7 +146,7 @@ services:
 #        networks:
 #            internal:
 #            shared:
-#                ipv4_address: 172.55.0.11
+#                ipv4_address: 172.55.0.7
 #    mongo:
 #        image: mongo
 #        volumes:
