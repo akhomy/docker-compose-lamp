@@ -108,7 +108,7 @@ services:
     ngrok:
         image: lordius/alpine-ngrok
         environment:
-            ARGS: http 172.53.0.4:80
+            ARGS: http 172.53.0.3:80
         networks:
             shared:
                 ipv4_address: 172.55.0.5
