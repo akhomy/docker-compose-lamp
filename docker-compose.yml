@@ -47,7 +47,7 @@ services:
         networks:
             - internal
         extra_hosts:
-            - "docker.dockerlamp:172.55.0.3" 
+            - "site.dockerlamp:172.55.0.3" 
 
     apache2_mpm:
         image: lordius/alpine-apache
