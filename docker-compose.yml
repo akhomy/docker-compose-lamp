@@ -12,8 +12,8 @@ services:
             - ./docker-runtime/mysql/lib:/var/lib/mysql
         environment:
             MYSQL_ROOT_PASSWORD: root
-            MYSQL_USER: root
-            MYSQL_PASSWORD: root
+            MYSQL_USER: testdrive
+            MYSQL_PASSWORD: testdrive
             MYSQL_DATABASE: testdrive
         #command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci # The simple way to override the mariadb config.
         networks:
