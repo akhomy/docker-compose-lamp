@@ -60,7 +60,7 @@ You could edit your system host file for accessing containers via domain names b
 See READMEs for more details, like environment variables for image
 
 * [PhpMyAdmin](https://github.com/phpmyadmin/docker/blob/master/README.md)
-* [PHP-FPM](https://github.com/a-kom/alpine-php_fpm/blob/master/README.md)
+* [PHP-FPM](https://github.com/a-kom/alpine-php_fpm/blob/php-7/README.md)
 * [NGINX](https://github.com/a-kom/alpine-nginx/blob/master/README.md)
 * [Apache2 with MPM mode](https://github.com/a-kom/alpine-apache/blob/master/README.md)
 * [MailHog](https://github.com/a-kom/alpine-mailhog/blob/master/README.md)
