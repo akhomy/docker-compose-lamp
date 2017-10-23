@@ -9,7 +9,8 @@ Based on the docker Alpine image, built to be fast, small and extendable LAMP st
 * [Apache2 with MPM mode](https://github.com/a-kom/alpine-apache)
 * [MailHog](https://github.com/a-kom/alpine-mailhog)
 * [StandaloneFirefoxDebug](https://github.com/SeleniumHQ/docker-selenium/tree/master/StandaloneFirefoxDebug)
-* [Node.js](https://github.com/nodejs/docker-node/blob/c044d61e6d02756bb8ed1557b2f0c7a0d7fead6f/8.4/alpine/Dockerfile)
+* [Node.js](https://github.com/nodejs/docker-node)
+* [MongoDB](https://github.com/docker-library/mongo)
 
 The LAMP stack consists of the following containers:
 
@@ -25,6 +26,7 @@ The LAMP stack consists of the following containers:
 | PHP-FPM-DATA              | php-7, php-5       | php-fpm   | [lordius//alpine-php_fpm]                    |   |
 | StandaloneFirefoxDebug    | 2.48.2             | selenium  | [selenium/standalone-firefox-debug]          |   |
 | Node.js                   | node:8.4.0-alpine  | node      | [node]                                       |   |
+| MongoDB                   | latest             | mongo     | [mongo]                                      |   |
 
 ## Requirements
 Install Docker (Linux, Docker for Mac or Docker for Windows (10+ Pro)). For Linux additionally install docker compose.
