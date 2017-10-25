@@ -54,11 +54,11 @@ You could edit your system host file for accessing containers via domain names b
 
 `172.55.0.2 phpmyadmin.dockerlamp`
 
-`172.55.0.3 site.dockerlamp`
+`172.55.0.4 site.dockerlamp`
 
-`172.55.0.4 mailhog.dockerlamp`
+`172.55.0.5 mailhog.dockerlamp`
 
-`172.55.0.5 ngrok.dockerlamp`
+`172.55.0.6 ngrok.dockerlamp`
 
 ## Documentation
 See READMEs for more details, like environment variables for image

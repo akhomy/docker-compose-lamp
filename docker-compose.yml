@@ -18,6 +18,20 @@ services:
         #command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci # The simple way to override the mariadb config.
         networks:
             - internal
+            
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        depends_on:
+            - mysql
+        environment:
+            PMA_HOST: mysql
+            PHP_UPLOAD_MAX_FILESIZE: 1G
+            PHP_MAX_INPUT_VARS: 1G
+        networks:
+            internal:
+            shared:
+                ipv4_address: 172.55.0.2            
 
     php-fpm:
 # Pls, check image tags, latest is php-7, but we have php-5 too.
@@ -52,7 +66,7 @@ services:
         networks:
             - internal
         extra_hosts:
-            - "site.dockerlamp:172.55.0.3" 
+            - "site.dockerlamp:172.55.0.4" 
 
     apache2_mpm:
         image: lordius/alpine-apache
@@ -70,21 +84,8 @@ services:
         networks:
             internal:
             shared:
-                ipv4_address: 172.55.0.2
-
-
-    phpmyadmin:
-        image: phpmyadmin/phpmyadmin
-        depends_on:
-            - mysql
-        environment:
-            PMA_HOST: mysql
-            PHP_UPLOAD_MAX_FILESIZE: 1G
-            PHP_MAX_INPUT_VARS: 1G
-        networks:
-            internal:
-            shared:
                 ipv4_address: 172.55.0.3
+
     nginx:
         image: lordius/alpine-nginx
         depends_on:
