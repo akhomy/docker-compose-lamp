@@ -34,9 +34,9 @@ Install Docker (Linux, Docker for Mac or Docker for Windows (10+ Pro)). For Linu
 ##  Introduction
 Run inside folder with **docker-compose.yml**: `docker-compose up -d`
 
-To view **PHP** info with **NGINX** use a link or IP: **http://locahost:8005/info.php**, **http://172.55.0.6/info.php**.
+To view **PHP** info with **NGINX** use the IP: **http://172.55.0.4/info.php**.
 
-To view **PHP** info with **Apache2 in MPM mode** use a link or IP: **http://locahost:8004/info.php**, **http://172.55.0.5/info.php**.
+To view **PHP** info with **Apache2 in MPM mode** use a link the IP: **http://172.55.0.3/info.php**.
 
 To enable **Selenium** check **docker-compose.yml** and uncomment related **selenium** and **php-fpm-data** sections.
 
@@ -44,9 +44,9 @@ To enable custom configs from files, please, check image info and uncomment rela
 
 **PhpMyAdmin** is available under **http://172.55.0.2**
 
-**MailHog** is available under **http://172.55.0.4:8025**
+**MailHog** is available under **http://172.55.0.5:8025**
 
-**NGROK** is available under **http://172.55.0.5:4040**
+**NGROK** is available under **http://172.55.0.6:4040**
 
 For running multiple instances on your local machine you could update IP range or port inside **docker-compose.yml**. For this, on your instance change IPs to another range, e.g. from `172.55` to `172.54.*`. The same is for ports.
 
