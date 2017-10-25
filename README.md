@@ -23,7 +23,7 @@ The LAMP stack consists of the following containers:
 | Nginx                     | latest             | nginx     | [lordius/alpine-nginx]                       | ✓ |
 | Mailhog                   | latest             | mailhog   | [lordius/alpine-mailhog]                     | ✓ |
 | NGROK                     | latest             | ngrok     | [lordius/alpine-ngrok]                       | ✓ |
-| PHP-FPM-DATA              | php-7, php-5       | php-fpm   | [lordius//alpine-php_fpm]                    |   |
+| PHP-FPM-DATA              | php-7, php-5       | php-fpm   | [lordius/alpine-php_fpm]                     |   |
 | StandaloneFirefoxDebug    | 2.48.2             | selenium  | [selenium/standalone-firefox-debug]          |   |
 | Node.js                   | node:8.4.0-alpine  | node      | [node]                                       |   |
 | MongoDB                   | latest             | mongo     | [mongo]                                      |   |
