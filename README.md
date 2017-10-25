@@ -38,6 +38,8 @@ To view **PHP** info with **Apache2 in MPM mode** use a link or IP: **http://loc
 
 To enable **Selenium** check **docker-compose.yml** and uncomment related **selenium** and **php-fpm-data** sections.
 
+To enable custom configs from files, please, check image info and uncomment related image volumes section.
+
 **PhpMyAdmin** is available under **http://172.55.0.2**
 
 **MailHog** is available under **http://172.55.0.4:8025**
