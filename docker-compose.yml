@@ -30,6 +30,9 @@ services:
         volumes:
             - ./htdocs:/var/www/localhost/htdocs
             - ./crontasks.txt:/home/crontasks.txt
+# Attach sample configs if necessary.            
+#            - ./docker-runtime/php7:/temp_configs_dir/php7            
+#            - ./docker-runtime/php5:/temp_configs_dir/php5
         environment:
             CRONTAB_ENABLED: 0
             PHP_FPM_PORT: 7000
@@ -53,13 +56,19 @@ services:
         image: lordius/alpine-apache
         depends_on:
             - php-fpm
+# Attach sample configs if necessary.            
+#        volumes:
+#            - ./docker-runtime/apache2:/temp_configs_dir/apache2
         volumes_from:
             - php-fpm
         environment:
+            DOCUMENT_ROOT: /var/www/localhost/htdocs
             PROXY_PASS: fcgi://php-fpm:7000/var/www/localhost/htdocs
             APACHE_LISTEN_PORT: 80
         networks:
-            - internal
+            internal:
+            shared:
+                ipv4_address: 172.55.0.2
 
 
     phpmyadmin:
@@ -73,11 +82,14 @@ services:
         networks:
             internal:
             shared:
-                ipv4_address: 172.55.0.2
+                ipv4_address: 172.55.0.3
     nginx:
         image: lordius/alpine-nginx
         depends_on:
             - apache2_mpm
+# Attach sample configs if necessary.            
+#        volumes:
+#            - ./docker-runtime/nginx:/temp_configs_dir/nginx                          
         volumes_from:
             - php-fpm
         environment:
@@ -94,7 +106,7 @@ services:
         networks:
           internal:
           shared:
-              ipv4_address: 172.55.0.3
+              ipv4_address: 172.55.0.4
 
     mailhog:
         image: lordius/alpine-mailhog
@@ -103,7 +115,7 @@ services:
         networks:
           internal:
           shared:
-             ipv4_address: 172.55.0.4
+             ipv4_address: 172.55.0.5
 
     ngrok:
         image: lordius/alpine-ngrok
@@ -111,7 +123,7 @@ services:
             ARGS: http 172.53.0.3:80
         networks:
             shared:
-                ipv4_address: 172.55.0.5
+                ipv4_address: 172.55.0.6
 
 #    php-fpm-data:
 #        image: lordius/alpine-php_fpm
