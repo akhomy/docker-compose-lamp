@@ -12,8 +12,8 @@ services:
             - ./docker-runtime/mysql/lib:/var/lib/mysql
         environment:
             MYSQL_ROOT_PASSWORD: root
-            MYSQL_USER: root
-            MYSQL_PASSWORD: root
+            MYSQL_USER: testdrive
+            MYSQL_PASSWORD: testdrive
             MYSQL_DATABASE: testdrive
         #command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci # The simple way to override the mariadb config.
         networks:
@@ -34,6 +34,8 @@ services:
 #            - ./docker-runtime/php7:/temp_configs_dir/php7            
 #            - ./docker-runtime/php5:/temp_configs_dir/php5
         environment:
+            DRUSH_VERSION: 8.x
+            PHP_SHOW_ERRORS: 1
             CRONTAB_ENABLED: 0
             PHP_FPM_PORT: 7000
             PHP_SENDMAIL_PATH: /usr/sbin/sendmail -i -t
