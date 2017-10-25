@@ -19,7 +19,6 @@ services:
         networks:
             - internal
             
-
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
         depends_on:
