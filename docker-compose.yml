@@ -146,7 +146,7 @@ services:
 #            shared:
 #                ipv4_address: 172.55.0.7
 
-##Node example, based on node express.
+# Node stack.
 #    node:
 #        image: node:8.4.0-alpine
 #        environment:
