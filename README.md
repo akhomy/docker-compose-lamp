@@ -32,6 +32,7 @@ The LAMP stack consists of the following containers:
 Install Docker (Linux, Docker for Mac or Docker for Windows (10+ Pro)). For Linux additionally install docker compose.
 
 ##  Introduction
+### Linux
 Run inside folder with **docker-compose.yml**: `docker-compose up -d`
 
 To view **PHP** info with **NGINX** use the IP: **http://172.55.0.4/info.php**.
@@ -59,6 +60,10 @@ You could edit your system host file for accessing containers via domain names b
 `172.55.0.5 mailhog.dockerlamp`
 
 `172.55.0.6 ngrok.dockerlamp`
+
+### Docker Toolbox
+
+Documentation in progress.
 
 ## Documentation
 See READMEs for more details, like environment variables for image
