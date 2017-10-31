@@ -21,6 +21,8 @@ services:
             
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
+        links:
+            - mysql
         depends_on:
             - mysql
         environment:
@@ -37,12 +39,16 @@ services:
         image: lordius/alpine-php_fpm
 #        image: lordius/alpine-php_fpm:php-5
 #        image: lordius/alpine-php_fpm:php-7
+        links:
+            - mysql
+            - mailhog
         depends_on:
             - mysql
+            - mailhog
 #            - selenium
         volumes:
-            - ./htdocs:/var/www/localhost/htdocs
             - ./crontasks.txt:/home/crontasks.txt
+            - ./htdocs:/var/www/localhost/htdocs
 # Attach sample configs if necessary.            
 #            - ./docker-runtime/php7:/temp_configs_dir/php7            
 #            - ./docker-runtime/php5:/temp_configs_dir/php5
@@ -69,6 +75,8 @@ services:
 
     apache2_mpm:
         image: lordius/alpine-apache
+        links:
+            - php-fpm
         depends_on:
             - php-fpm
 # Attach sample configs if necessary.            
@@ -87,6 +95,8 @@ services:
 
     nginx:
         image: lordius/alpine-nginx
+        links:
+            - apache2_mpm
         depends_on:
             - apache2_mpm
 # Attach sample configs if necessary.            
@@ -112,8 +122,6 @@ services:
 
     mailhog:
         image: lordius/alpine-mailhog
-        depends_on:
-            - php-fpm
         networks:
           internal:
           shared:
@@ -122,6 +130,7 @@ services:
     ngrok:
         image: lordius/alpine-ngrok
         environment:
+# Here must be your container IP accesable from browser.
             ARGS: http 172.53.0.3:80
         networks:
             shared:
