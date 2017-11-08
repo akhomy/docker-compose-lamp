@@ -1,4 +1,4 @@
-# Docker-based LAMP stack
+# Docker-compose LAMP stack
 Based on the docker images, built to be fast, small and extendable LAMP stack.
 
 ## Stack
