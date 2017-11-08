@@ -1,5 +1,5 @@
 # Docker-based LAMP stack
-Based on the docker Alpine image, built to be fast, small and extendable LAMP stack.
+Based on the docker images, built to be fast, small and extendable LAMP stack.
 
 ## Stack
 * [MariaDB](https://github.com/docker-library/mariadb)
