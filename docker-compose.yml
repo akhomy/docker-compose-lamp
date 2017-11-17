@@ -67,6 +67,7 @@ services:
             PHP_POST_MAX_SIZE: 756M
             PHP_ALLOW_URL_FOPEN: "On"
             PHP_ALWAYS_POPULATE_RAW_POST_DATA: -1
+            PHP_SHORT_OPEN_TAG: 1
             PHP_MEMORY_LIMIT: 1024M
         networks:
             - internal
