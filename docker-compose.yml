@@ -48,9 +48,9 @@ services:
         depends_on:
             - mysql
             - mailhog
-#            - selenium
 #            - redis
 #            - memcached
+#            - selenium
         volumes:
             - ./crontasks.txt:/home/crontasks.txt
             - ./htdocs:/var/www/localhost/htdocs
