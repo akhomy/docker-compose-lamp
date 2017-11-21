@@ -42,12 +42,14 @@ services:
         links:
             - mysql
             - mailhog
+#            - postgres
 #            - redis
 #            - memcached
 #            - selenium
         depends_on:
             - mysql
             - mailhog
+#            - postgres
 #            - redis
 #            - memcached
 #            - selenium
