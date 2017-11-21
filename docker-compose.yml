@@ -141,6 +141,26 @@ services:
         networks:
             shared:
                 ipv4_address: 172.55.0.6
+                
+#    adminer:
+#        image: adminer
+#        restart: always
+#        networks:
+#            stack_net:
+#                ipv4_address: 172.55.0.7
+
+#    postgres:
+#        image: postgres
+#        restart: always
+#        networks:
+#            stack_net:
+#                ipv4_address: 172.55.0.8
+#        environment:
+#            POSTGRES_PASSWORD: testdrive
+#            POSTGRES_USER: testdrive
+#            POSTGRES_DB: testdrive
+#        volumes:
+#            - ./docker-runtime/postgres/data:/var/lib/postgresql/data
 
 #    redis:
 #        image: redis
@@ -195,8 +215,6 @@ services:
 #        volumes:
 #          - ./docker-runtime/mongo:/var/lib/mongodb
 #        restart: always
-#        ports:
-#            - 27017:27017
 #        command: mongod --smallfiles --logpath=/dev/null # --quiet
 #        networks:
 #            - internal
