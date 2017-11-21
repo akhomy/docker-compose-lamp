@@ -42,10 +42,15 @@ services:
         links:
             - mysql
             - mailhog
+#            - redis
+#            - memcached
+#            - selenium
         depends_on:
             - mysql
             - mailhog
 #            - selenium
+#            - redis
+#            - memcached
         volumes:
             - ./crontasks.txt:/home/crontasks.txt
             - ./htdocs:/var/www/localhost/htdocs
@@ -137,6 +142,16 @@ services:
             shared:
                 ipv4_address: 172.55.0.6
 
+#    redis:
+#        image: redis
+#        networks:
+#            - internal
+
+#    memcached:
+#        image: memcached
+#        networks:
+#            - internal
+
 #    php-fpm-data:
 #        image: lordius/alpine-php_fpm
 #        networks:
@@ -154,11 +169,15 @@ services:
 #            - NET_RAW
 #        networks:
 #            shared:
-#                ipv4_address: 172.55.0.7
+#                ipv4_address: 172.55.0.9
 
 # Node stack.
 #    node:
 #        image: node:8.4.0-alpine
+#        links:
+#            - mongo
+#        depends_on:
+#            - mongo
 #        environment:
 #        - NODE_ENV=production
 #        volumes:
@@ -170,7 +189,7 @@ services:
 #        networks:
 #            internal:
 #            shared:
-#                ipv4_address: 172.55.0.8
+#                ipv4_address: 172.55.0.10
 #    mongo:
 #        image: mongo
 #        volumes:
