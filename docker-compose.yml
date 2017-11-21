@@ -144,6 +144,10 @@ services:
                 
 #    adminer:
 #        image: adminer
+#        links:
+#            - postgres
+#        depends_on:
+#            - postgres
 #        restart: always
 #        networks:
 #            stack_net:
@@ -153,8 +157,7 @@ services:
 #        image: postgres
 #        restart: always
 #        networks:
-#            stack_net:
-#                ipv4_address: 172.55.0.8
+#            - internal
 #        environment:
 #            POSTGRES_PASSWORD: testdrive
 #            POSTGRES_USER: testdrive
