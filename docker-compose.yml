@@ -226,7 +226,9 @@ services:
 #        working_dir: /usr/src/app
 #        expose:
 #        - "3000"
+## You could use any command to running.
 #        command: ash -c "PORT=3000 DEBUG=htdocs:* npm start"
+#        command: ash -c "PORT=3000 node index.js"
 #        networks:
 #            internal:
 #            shared:
