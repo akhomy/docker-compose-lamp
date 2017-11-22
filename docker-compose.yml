@@ -1,55 +1,25 @@
 version: "2"
 
 services:
-    mysql:
-        image: mariadb:10.0
-        ulimits:
-            nproc: 65535
-            nofile:
-                soft: 20000
-                hard: 40000
-        volumes:
-            - ./docker-runtime/mysql/lib:/var/lib/mysql
-        environment:
-            MYSQL_ROOT_PASSWORD: root
-            MYSQL_USER: testdrive
-            MYSQL_PASSWORD: testdrive
-            MYSQL_DATABASE: testdrive
-        #command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci # The simple way to override the mariadb config.
-        networks:
-            - internal
-            
-    phpmyadmin:
-        image: phpmyadmin/phpmyadmin
-        links:
-            - mysql
-        depends_on:
-            - mysql
-        environment:
-            PMA_HOST: mysql
-            PHP_UPLOAD_MAX_FILESIZE: 1G
-            PHP_MAX_INPUT_VARS: 1G
-        networks:
-            internal:
-            shared:
-                ipv4_address: 172.55.0.2            
-
+################ LAMP Stack.
     php-fpm:
 # Pls, check image tags, latest is php-7, but we have php-5 too.
         image: lordius/alpine-php_fpm
 #        image: lordius/alpine-php_fpm:php-5
 #        image: lordius/alpine-php_fpm:php-7
         links:
-            - mysql
-            - mailhog
+            - mailhog            
+            - mysql            
 #            - postgres
+#            - mongo
 #            - redis
 #            - memcached
 #            - selenium
         depends_on:
-            - mysql
             - mailhog
+            - mysql
 #            - postgres
+#            - mongo
 #            - redis
 #            - memcached
 #            - selenium
@@ -99,7 +69,7 @@ services:
         networks:
             internal:
             shared:
-                ipv4_address: 172.55.0.3
+                ipv4_address: 172.55.0.2
 
     nginx:
         image: lordius/alpine-nginx
@@ -126,14 +96,15 @@ services:
         networks:
           internal:
           shared:
-              ipv4_address: 172.55.0.4
-
+              ipv4_address: 172.55.0.3
+              
+################ Extra toolkit images.
     mailhog:
         image: lordius/alpine-mailhog
         networks:
           internal:
           shared:
-             ipv4_address: 172.55.0.5
+             ipv4_address: 172.55.0.4
 
     ngrok:
         image: lordius/alpine-ngrok
@@ -142,18 +113,51 @@ services:
             ARGS: http 172.53.0.3:80
         networks:
             shared:
-                ipv4_address: 172.55.0.6
+                ipv4_address: 172.55.0.5
+# Requires mysql container.                
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        links:
+            - mysql
+        depends_on:
+            - mysql
+        environment:
+            PMA_HOST: mysql
+            PHP_UPLOAD_MAX_FILESIZE: 1G
+            PHP_MAX_INPUT_VARS: 1G
+        networks:
+            internal:
+            shared:
+                ipv4_address: 172.55.0.6   
                 
 #    adminer:
 #        image: adminer
 #        links:
+#            - mysql
 #            - postgres
+#            - mongo
 #        depends_on:
+#            - mysql
 #            - postgres
+#            - mongo
 #        restart: always
 #        networks:
 #            stack_net:
 #                ipv4_address: 172.55.0.7
+
+################ Database images.
+    mysql:
+        image: mariadb:10.0
+        volumes:
+            - ./docker-runtime/mysql/lib:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_USER: testdrive
+            MYSQL_PASSWORD: testdrive
+            MYSQL_DATABASE: testdrive
+        #command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci # The simple way to override the mariadb config.
+        networks:
+            - internal
 
 #    postgres:
 #        image: postgres
@@ -167,6 +171,16 @@ services:
 #        volumes:
 #            - ./docker-runtime/postgres/data:/var/lib/postgresql/data
 
+#    mongo:
+#        image: mongo
+#        volumes:
+#          - ./docker-runtime/mongo:/var/lib/mongodb
+#        restart: always
+#        command: mongod --smallfiles --logpath=/dev/null # --quiet
+#        networks:
+#            - internal
+
+################ Cache-memory images.
 #    redis:
 #        image: redis
 #        networks:
@@ -177,6 +191,7 @@ services:
 #        networks:
 #            - internal
 
+################ Selenium image configuration and php-fpm-data as proxy container for selenium.
 #    php-fpm-data:
 #        image: lordius/alpine-php_fpm
 #        networks:
@@ -196,7 +211,7 @@ services:
 #            shared:
 #                ipv4_address: 172.55.0.9
 
-# Node stack.
+################ Node stack.
 #    node:
 #        image: node:8.4.0-alpine
 #        links:
@@ -216,14 +231,6 @@ services:
 #            shared:
 #                ipv4_address: 172.55.0.10
 
-#    mongo:
-#        image: mongo
-#        volumes:
-#          - ./docker-runtime/mongo:/var/lib/mongodb
-#        restart: always
-#        command: mongod --smallfiles --logpath=/dev/null # --quiet
-#        networks:
-#            - internal
 
 networks:
   internal:
