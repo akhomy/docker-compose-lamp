@@ -142,8 +142,9 @@ services:
 #            - mongo
 #        restart: always
 #        networks:
-#            stack_net:
-#                ipv4_address: 172.55.0.7
+#          internal:
+#          shared:
+#              ipv4_address: 172.55.0.7
 
 ################ Database images.
     mysql:
@@ -162,14 +163,14 @@ services:
 #    postgres:
 #        image: postgres
 #        restart: always
-#        networks:
-#            - internal
 #        environment:
 #            POSTGRES_PASSWORD: testdrive
 #            POSTGRES_USER: testdrive
 #            POSTGRES_DB: testdrive
 #        volumes:
 #            - ./docker-runtime/postgres/data:/var/lib/postgresql/data
+#        networks:
+#            - internal
 
 #    mongo:
 #        image: mongo
