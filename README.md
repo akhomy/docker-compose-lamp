@@ -35,31 +35,31 @@ Install Docker (Linux, Docker for Mac or Docker for Windows (10+ Pro)). For Linu
 ### Linux
 Run inside folder with **docker-compose.yml**: `docker-compose up -d`
 
-To view **PHP** info with **NGINX** use the IP: **http://172.55.0.4/info.php**.
+To view **PHP** info with **NGINX** use the IP: **http://172.55.0.3/info.php**.
 
-To view **PHP** info with **Apache2 in MPM mode** use a link the IP: **http://172.55.0.3/info.php**.
+To view **PHP** info with **Apache2 in MPM mode** use a link the IP: **http://172.55.0.2/info.php**.
 
 To enable **Selenium** check **docker-compose.yml** and uncomment related **selenium** and **php-fpm-data** sections.
 
 To enable custom configs from files, please, check image info and uncomment related image volumes section.
 
-**PhpMyAdmin** is available under **http://172.55.0.2**
+**PhpMyAdmin** is available under **http://172.55.0.6**
 
-**MailHog** is available under **http://172.55.0.5:8025**
+**MailHog** is available under **http://172.55.0.4:8025**
 
-**NGROK** is available under **http://172.55.0.6:4040**
+**NGROK** is available under **http://172.55.0.5:4040**
 
 For running multiple instances on your local machine you could update IP range or port inside **docker-compose.yml**. For this, on your instance change IPs to another range, e.g. from `172.55` to `172.54.*`. The same is for ports.
 
 You could edit your system host file for accessing containers via domain names by adding lines (or something like this based on your IP and domains, don't forget to change `extra_hosts` in `docker-compose.yml`):
 
-`172.55.0.2 phpmyadmin.dockerlamp`
+`172.55.0.6 phpmyadmin.dockerlamp`
 
-`172.55.0.4 site.dockerlamp`
+`172.55.0.3 site.dockerlamp`
 
-`172.55.0.5 mailhog.dockerlamp`
+`172.55.0.4 mailhog.dockerlamp`
 
-`172.55.0.6 ngrok.dockerlamp`
+`172.55.0.5 ngrok.dockerlamp`
 
 ### Docker Toolbox
 
