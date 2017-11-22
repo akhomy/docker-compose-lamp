@@ -5,30 +5,30 @@ services:
     php-fpm:
 # Pls, check image tags, latest is php-7, but we have php-5 too.
         image: lordius/alpine-php_fpm
-#        image: lordius/alpine-php_fpm:php-5
-#        image: lordius/alpine-php_fpm:php-7
+        # image: lordius/alpine-php_fpm:php-5
+        # image: lordius/alpine-php_fpm:php-7
         links:
             - mailhog            
             - mysql            
-#            - postgres
-#            - mongo
-#            - redis
-#            - memcached
-#            - selenium
+            # - postgres
+            # - mongo
+            # - redis
+            # - memcached
+            # - solr
         depends_on:
             - mailhog
             - mysql
-#            - postgres
-#            - mongo
-#            - redis
-#            - memcached
-#            - selenium
+            # - postgres
+            # - mongo
+            # - redis
+            # - memcached
+            # - solr            
         volumes:
             - ./crontasks.txt:/home/crontasks.txt
             - ./htdocs:/var/www/localhost/htdocs
-# Attach sample configs if necessary.            
-#            - ./docker-runtime/php7:/temp_configs_dir/php7            
-#            - ./docker-runtime/php5:/temp_configs_dir/php5
+            # Attach sample configs if necessary.            
+            # - ./docker-runtime/php7:/temp_configs_dir/php7            
+            # - ./docker-runtime/php5:/temp_configs_dir/php5
         environment:
             DRUSH_VERSION: 8.x
             PHP_SHOW_ERRORS: 1
@@ -57,14 +57,14 @@ services:
             - php-fpm
         depends_on:
             - php-fpm
-# Attach sample configs if necessary.            
-#        volumes:
-#            - ./docker-runtime/apache2:/temp_configs_dir/apache2
+        # Attach sample configs if necessary.            
+        # volumes:
+        #     - ./docker-runtime/apache2:/temp_configs_dir/apache2
         volumes_from:
             - php-fpm
         environment:
-            DOCUMENT_ROOT: /var/www/localhost/htdocs
-            PROXY_PASS: fcgi://php-fpm:7000/var/www/localhost/htdocs
+            DOCUMENT_ROOT: /var/www/localhost/htdocs/docroot
+            PROXY_PASS: fcgi://php-fpm:7000/var/www/localhost/htdocs/docroot
             APACHE_LISTEN_PORT: 80
         networks:
             internal:
@@ -77,15 +77,15 @@ services:
             - apache2_mpm
         depends_on:
             - apache2_mpm
-# Attach sample configs if necessary.            
-#        volumes:
-#            - ./docker-runtime/nginx:/temp_configs_dir/nginx                          
+        # Attach sample configs if necessary.            
+        # volumes:
+        #     - ./docker-runtime/nginx:/temp_configs_dir/nginx                          
         volumes_from:
             - php-fpm
         environment:
             KEEPALIVE_TIMEOUT: 3000
             LISTEN_PORT: 80
-            SERVER_ROOT: /var/www/localhost/htdocs
+            SERVER_ROOT: /var/www/localhost/htdocs/docroot
             SERVER_NAME: localhost
             CLIENT_MAX_BODY_SIZE: 32m
             PROXY_CONNECT_TIMEOUT: 3000
@@ -97,23 +97,65 @@ services:
           internal:
           shared:
               ipv4_address: 172.55.0.3
+
+
+################ Node stack.
+    # node:
+    #     image: node:8.4.0-alpine
+    #     links:
+    #         - mongo
+    #     depends_on:
+    #         - mongo
+    #     environment:
+    #     - NODE_ENV=production
+    #     volumes:
+    #         - ./htdocs:/usr/src/app
+    #     working_dir: /usr/src/app
+    #     expose:
+    #     - "3000"
+    # # You could use any command to running. Or run without any command and execute code inside image.
+    # # E.g: `docker exec -it dockercomposelamp_node_1 ash` and then inside container go to `/usr/src/app` and run node.
+    #     command: ash -c "PORT=3000 DEBUG=htdocs:* npm start"
+    # #     command: ash -c "PORT=3000 node index.js"
+    #     networks:
+    #         internal:
+    #         shared:
+    #             ipv4_address: 172.55.0.4
               
 ################ Extra toolkit images.
     mailhog:
         image: lordius/alpine-mailhog
         networks:
-          internal:
-          shared:
-             ipv4_address: 172.55.0.4
+            internal:
+            shared:
+                ipv4_address: 172.55.0.5
 
     ngrok:
         image: lordius/alpine-ngrok
         environment:
-# Here must be your container IP accesable from browser.
+            # Here must be your container IP accesable from browser.
             ARGS: http 172.53.0.3:80
         networks:
             shared:
-                ipv4_address: 172.55.0.5
+                ipv4_address: 172.55.0.6
+
+    # solr:
+    #     image: solr:6.5.1
+    #     ports:
+    #         - "8983:8983"
+    #     volumes:
+    #         # Example of drupal solr core configuration. 6.x. Check image tag for correct config. 
+    #         - ./docker-runtime/solr_drupal_6_x:/opt/solr/server/solr/mycores
+    #     entrypoint:
+    #         - docker-entrypoint.sh
+    #         - solr-precreate
+    #         - dockerlamp_drupal_core
+    #     networks:
+    #         internal:        
+    #         shared:
+    #             ipv4_address: 172.55.0.7
+
+################ DB managers.
 # Requires mysql container.                
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
@@ -128,23 +170,23 @@ services:
         networks:
             internal:
             shared:
-                ipv4_address: 172.55.0.6   
+                ipv4_address: 172.55.0.8
                 
-#    adminer:
-#        image: adminer
-#        links:
-#            - mysql
-#            - postgres
-#            - mongo
-#        depends_on:
-#            - mysql
-#            - postgres
-#            - mongo
-#        restart: always
-#        networks:
-#          internal:
-#          shared:
-#              ipv4_address: 172.55.0.7
+    # adminer:
+    #     image: adminer
+    #     links:
+    #         - mysql
+    #         - postgres
+    #         - mongo
+    #     depends_on:
+    #         - mysql
+    #         - postgres
+    #         - mongo
+    #     restart: always
+    #     networks:
+    #         internal:
+    #         shared:
+    #             ipv4_address: 172.55.0.9
 
 ################ Database images.
     mysql:
@@ -156,83 +198,62 @@ services:
             MYSQL_USER: testdrive
             MYSQL_PASSWORD: testdrive
             MYSQL_DATABASE: testdrive
-        #command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci # The simple way to override the mariadb config.
+        # command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci # The simple way to override the mariadb config.
         networks:
             - internal
 
-#    postgres:
-#        image: postgres
-#        restart: always
-#        environment:
-#            POSTGRES_PASSWORD: testdrive
-#            POSTGRES_USER: testdrive
-#            POSTGRES_DB: testdrive
-#        volumes:
-#            - ./docker-runtime/postgres/data:/var/lib/postgresql/data
-#        networks:
-#            - internal
+    # postgres:
+    #     image: postgres
+    #     restart: always
+    #     environment:
+    #         POSTGRES_PASSWORD: testdrive
+    #         POSTGRES_USER: testdrive
+    #         POSTGRES_DB: testdrive
+    #     volumes:
+    #         - ./docker-runtime/postgres/data:/var/lib/postgresql/data
+    #     networks:
+    #         - internal
 
-#    mongo:
-#        image: mongo
-#        volumes:
-#          - ./docker-runtime/mongo:/var/lib/mongodb
-#        restart: always
-#        command: mongod --smallfiles --logpath=/dev/null # --quiet
-#        networks:
-#            - internal
+    # mongo:
+    #     image: mongo
+    #     volumes:
+    #         - ./docker-runtime/mongo:/var/lib/mongodb
+    #     restart: always
+    #     command: mongod --smallfiles --logpath=/dev/null # --quiet
+    #     networks:
+    #         - internal
 
 ################ Cache-memory images.
-#    redis:
-#        image: redis
-#        networks:
-#            - internal
+    # redis:
+    #     image: redis
+    #     networks:
+    #         - internal
 
-#    memcached:
-#        image: memcached
-#        networks:
-#            - internal
+    # memcached:
+    #     image: memcached
+    #     networks:
+    #         - internal
 
 ################ Selenium image configuration and php-fpm-data as proxy container for selenium.
-#    php-fpm-data:
-#        image: lordius/alpine-php_fpm
-#        networks:
-#          - internal
+    # php-fpm-data:
+    #     image: lordius/alpine-php_fpm
+    #     networks:
+    #         - internal
 
-#    selenium:
-#        image: selenium/standalone-firefox-debug:2.48.2
-#        links:
-#            - php-fpm
-#        ports:
-#            - "4444"
-#            - "5900"
-#        cap_add:
-#            - NET_ADMIN
-#            - NET_RAW
-#        networks:
-#            shared:
-#                ipv4_address: 172.55.0.9
+    # selenium:
+    #     image: selenium/standalone-firefox-debug:2.48.2
+    #     links:
+    #         - php-fpm
+    #     ports:
+    #         - "4444"
+    #         - "5900"
+    #     cap_add:
+    #         - NET_ADMIN
+    #         - NET_RAW
+    #     networks:
+    #         shared:
+    #             ipv4_address: 172.55.0.10
 
-################ Node stack.
-#    node:
-#        image: node:8.4.0-alpine
-#        links:
-#            - mongo
-#        depends_on:
-#            - mongo
-#        environment:
-#        - NODE_ENV=production
-#        volumes:
-#            - ./htdocs:/usr/src/app
-#        working_dir: /usr/src/app
-#        expose:
-#        - "3000"
-## You could use any command to running.
-#        command: ash -c "PORT=3000 DEBUG=htdocs:* npm start"
-#        command: ash -c "PORT=3000 node index.js"
-#        networks:
-#            internal:
-#            shared:
-#                ipv4_address: 172.55.0.10
 
 
 networks:
