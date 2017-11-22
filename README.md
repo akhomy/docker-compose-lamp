@@ -80,14 +80,23 @@ You could edit your system host file for accessing containers via domain names b
 Documentation in progress.
 
 ## Documentation
-See READMEs for more details, like environment variables for image
+See READMEs for more details, like environment variables for images:
 
-* [PhpMyAdmin](https://github.com/phpmyadmin/docker/blob/master/README.md)
 * [PHP-FPM](https://github.com/a-kom/alpine-php_fpm/blob/php-7/README.md)
-* [NGINX](https://github.com/a-kom/alpine-nginx/blob/master/README.md)
 * [Apache2 with MPM mode](https://github.com/a-kom/alpine-apache/blob/master/README.md)
+* [NGINX](https://github.com/a-kom/alpine-nginx/blob/master/README.md)
+* [Node.js](https://github.com/nodejs/docker-node)
 * [MailHog](https://github.com/a-kom/alpine-mailhog/blob/master/README.md)
 * [NGROK](https://github.com/a-kom/alpine-ngrok/blob/master/README.md)
+* [Solr](https://github.com/docker-solr/docker-solr)
+* [PhpMyAdmin](https://github.com/phpmyadmin/phpmyadmin)
+* [Adminer](https://github.com/TimWolla/docker-adminer)
+* [MariaDB](https://github.com/docker-library/mariadb)
+* [PostgreSQL](https://github.com/docker-library/postgres)
+* [MongoDB](https://github.com/docker-library/mongo)
+* [Redis](https://github.com/docker-library/redis)
+* [Memcached](https://github.com/docker-library/memcached)
+* [StandaloneFirefoxDebug](https://github.com/SeleniumHQ/docker-selenium/tree/master/StandaloneFirefoxDebug)
 
 ## License
 
