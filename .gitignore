@@ -1,4 +1,6 @@
 /docker-runtime/mysql/
-/docker-runtime/solr_drupal_6_x/dockerlamp_drupal_core/data
+/docker-runtime/postgres/
+/docker-runtime/mongo/
+/docker-runtime/solr_drupal_6_x/dockerlamp_drupal_core/data/
 /nbproject
 /.vscode
