@@ -23,22 +23,22 @@ The LAMP stack consists of the following containers:
 
 | Container | Versions | Service name | Image | Enabled by default |
 | --------- | -------- | ------------ | ----- | ------------------ |
-| PHP-FPM                   | php-7, php-5       | php       | [lordius/alpine-php_fpm]                     | ✓ |
-| Apache                    | latest             | apache    | [lordius/alpine-apache]                      | ✓ |
-| Nginx                     | latest             | nginx     | [lordius/alpine-nginx]                       | ✓ |
-| Node.js                   | node:8.4.0-alpine  | node      | [node]                                       |   |
-| Mailhog                   | latest             | mailhog   | [lordius/alpine-mailhog]                     | ✓ |
-| NGROK                     | latest             | ngrok     | [lordius/alpine-ngrok]                       | ✓ |
-| Solr                      | 6.5.1              | solr      | [solr]                                       |   |
-| PhpMyAdmin                | latest             | pma       | [phpmyadmin/phpmyadmin]                      | ✓ |
-| Adminer                   | latest             | pma       | [adminer]                                    |   |
-| MariaDB                   | 10.0               | mariadb   | [mariadb]                                    | ✓ |
-| PostgreSQL                | latest             | postgres  | [postgres]                                   |   |
-| MongoDB                   | latest             | mongo     | [mongo]                                      |   |
-| Redis                     | latest             | redis     | [redis]                                      |   |
-| Memcached                 | latest             | memcached | [memcached]                                  |   |
-| PHP-FPM-DATA              | php-7, php-5       | php-fpm   | [lordius/alpine-php_fpm]                     |   |
-| StandaloneFirefoxDebug    | 2.48.2             | selenium  | [selenium/standalone-firefox-debug]          |   |
+| PHP-FPM                   | php-7, php-5       | php-fpm     | [lordius/alpine-php_fpm]                     | ✓ |
+| Apache                    | latest             | apache2_mpm | [lordius/alpine-apache]                      | ✓ |
+| Nginx                     | latest             | nginx       | [lordius/alpine-nginx]                       | ✓ |
+| Node.js                   | node:8.4.0-alpine  | node        | [node]                                       |   |
+| Mailhog                   | latest             | mailhog     | [lordius/alpine-mailhog]                     | ✓ |
+| NGROK                     | latest             | ngrok       | [lordius/alpine-ngrok]                       | ✓ |
+| Solr                      | 6.5.1              | solr        | [solr]                                       |   |
+| PhpMyAdmin                | latest             | phpmyadmin  | [phpmyadmin/phpmyadmin]                      | ✓ |
+| Adminer                   | latest             | adminer     | [adminer]                                    |   |
+| MariaDB                   | 10.0               | mariadb     | [mariadb]                                    | ✓ |
+| PostgreSQL                | latest             | postgres    | [postgres]                                   |   |
+| MongoDB                   | latest             | mongo       | [mongo]                                      |   |
+| Redis                     | latest             | redis       | [redis]                                      |   |
+| Memcached                 | latest             | memcached   | [memcached]                                  |   |
+| PHP-FPM-DATA              | php-7, php-5       | php-fpm-data| [lordius/alpine-php_fpm]                     |   |
+| StandaloneFirefoxDebug    | 2.48.2             | selenium    | [selenium/standalone-firefox-debug]          |   |
 
 ## Requirements
 Install Docker (Linux, Docker for Mac or Docker for Windows (10+ Pro)). For Linux additionally install docker compose.
