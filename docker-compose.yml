@@ -14,7 +14,7 @@ services:
             # - mongo
             # - redis
             # - memcached
-            # - solr
+            - solr
         depends_on:
             - mailhog
             - mysql
@@ -22,7 +22,7 @@ services:
             # - mongo
             # - redis
             # - memcached
-            # - solr            
+            - solr            
         volumes:
             - ./crontasks.txt:/home/crontasks.txt
             - ./htdocs:/var/www/localhost/htdocs
@@ -63,8 +63,8 @@ services:
         volumes_from:
             - php-fpm
         environment:
-            DOCUMENT_ROOT: /var/www/localhost/htdocs/docroot
-            PROXY_PASS: fcgi://php-fpm:7000/var/www/localhost/htdocs/docroot
+            DOCUMENT_ROOT: /var/www/localhost/htdocs
+            PROXY_PASS: fcgi://php-fpm:7000/var/www/localhost/htdocs
             APACHE_LISTEN_PORT: 80
         networks:
             internal:
@@ -85,7 +85,7 @@ services:
         environment:
             KEEPALIVE_TIMEOUT: 3000
             LISTEN_PORT: 80
-            SERVER_ROOT: /var/www/localhost/htdocs/docroot
+            SERVER_ROOT: /var/www/localhost/htdocs
             SERVER_NAME: localhost
             CLIENT_MAX_BODY_SIZE: 32m
             PROXY_CONNECT_TIMEOUT: 3000
@@ -115,8 +115,8 @@ services:
     #     - "3000"
     # # You could use any command to running. Or run without any command and execute code inside image.
     # # E.g: `docker exec -it dockercomposelamp_node_1 ash` and then inside container go to `/usr/src/app` and run node.
-    #     command: ash -c "PORT=3000 DEBUG=htdocs:* npm start"
-    # #     command: ash -c "PORT=3000 node index.js"
+    #     # command: ash -c "PORT=3000 DEBUG=htdocs:* npm start"
+    #     command: ash -c "PORT=3000 node server.js"
     #     networks:
     #         internal:
     #         shared:
@@ -139,21 +139,21 @@ services:
             shared:
                 ipv4_address: 172.55.0.6
 
-    # solr:
-    #     image: solr:6.5.1
-    #     ports:
-    #         - "8983:8983"
-    #     volumes:
-    #         # Example of drupal solr core configuration. 6.x. Check image tag for correct config. 
-    #         - ./docker-runtime/solr_drupal_6_x:/opt/solr/server/solr/mycores
-    #     entrypoint:
-    #         - docker-entrypoint.sh
-    #         - solr-precreate
-    #         - dockerlamp_drupal_core
-    #     networks:
-    #         internal:        
-    #         shared:
-    #             ipv4_address: 172.55.0.7
+    solr:
+        image: solr:6.5.1
+        ports:
+            - "8983:8983"
+        volumes:
+            # Example of drupal solr core configuration. 6.x. Check image tag for correct config. 
+            - ./docker-runtime/solr_drupal_6_x:/opt/solr/server/solr/mycores
+        entrypoint:
+            - docker-entrypoint.sh
+            - solr-precreate
+            - dockerlamp_drupal_core
+        networks:
+            internal:        
+            shared:
+                ipv4_address: 172.55.0.7
 
 ################ DB managers.
 # Requires mysql container.                
