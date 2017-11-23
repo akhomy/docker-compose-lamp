@@ -14,7 +14,7 @@ services:
             # - mongo
             # - redis
             # - memcached
-            - solr
+            # - solr
         depends_on:
             - mailhog
             - mysql
@@ -22,7 +22,7 @@ services:
             # - mongo
             # - redis
             # - memcached
-            - solr            
+            # - solr            
         volumes:
             - ./crontasks.txt:/home/crontasks.txt
             - ./htdocs:/var/www/localhost/htdocs
@@ -139,21 +139,21 @@ services:
             shared:
                 ipv4_address: 172.55.0.6
 
-    solr:
-        image: solr:6.5.1
-        ports:
-            - "8983:8983"
-        volumes:
-            # Example of drupal solr core configuration. 6.x. Check image tag for correct config. 
-            - ./docker-runtime/solr_drupal_6_x:/opt/solr/server/solr/mycores
-        entrypoint:
-            - docker-entrypoint.sh
-            - solr-precreate
-            - dockerlamp_drupal_core
-        networks:
-            internal:        
-            shared:
-                ipv4_address: 172.55.0.7
+    # solr:
+    #     image: solr:6.5.1
+    #     ports:
+    #         - "8983:8983"
+    #     volumes:
+    #         # Example of drupal solr core configuration. 6.x. Check image tag for correct config. 
+    #         - ./docker-runtime/solr_drupal_6_x:/opt/solr/server/solr/mycores
+    #     entrypoint:
+    #         - docker-entrypoint.sh
+    #         - solr-precreate
+    #         - dockerlamp_drupal_core
+    #     networks:
+    #         internal:        
+    #         shared:
+    #             ipv4_address: 172.55.0.7
 
 ################ DB managers.
 # Requires mysql container.                
