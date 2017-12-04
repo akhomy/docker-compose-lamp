@@ -49,7 +49,7 @@ services:
         networks:
             - internal
         extra_hosts:
-            - "site.dockerlamp:172.55.0.4" 
+            - "site.dockerlamp:172.55.0.3" 
 
     apache2_mpm:
         image: lordius/alpine-apache
