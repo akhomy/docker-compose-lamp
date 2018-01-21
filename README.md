@@ -87,7 +87,7 @@ You could edit your system host file for accessing containers via domain names b
 * Download and extract [Docker Compose LAMP](https://github.com/a-kom/docker-compose-lamp/releases) into your user directory.
 Like `C:\Users\UserName\docker-compose-lamp`.
 * Launch Docker Quickstart Terminal.
-* Go to the [docker-compose-lamp directory](docs/screenshots/Docker-Quickstart-Terminal-LAMP-directory.jpg): `cd /c/Users/UserName/docker-compose-lamp`.
+* Go to the [docker-compose-lamp directory](/docs/screenshots/Docker-Quickstart-Terminal-LAMP-directory.jpg): `cd /c/Users/UserName/docker-compose-lamp`.
 * Run `docker-compose up -d`
 * Launch [Kitematic (Alpha)](docs/screenshots/Kinematic-launch.jpg).
 * Go to *NGINX* container and press *Settings* [tab](docs/screenshots/Kinematic-NGINX-check.jpg).
