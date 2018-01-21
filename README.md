@@ -43,12 +43,12 @@ The LAMP stack consists of the following containers:
 ## Requirements
 ### Linux
 
-Install (Docker)[https://docs.docker.com/engine/installation] and [Docker Compose](https://docs.docker.com/compose/install).
+Install [Docker](https://docs.docker.com/engine/installation) and [Docker Compose](https://docs.docker.com/compose/install).
 
 ### Windows, MacOS
 #### Docker Toolbox (Recommend)
 
-Install [Docker Toolbox](https://docs.docker.com/toolbox/overview)
+Install [Docker Toolbox](https://docs.docker.com/toolbox/overview).
 
 ##  Introduction
 ### Linux
