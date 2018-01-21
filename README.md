@@ -95,7 +95,7 @@ You could edit your system host file for accessing some containers via domain na
 #### MacOS
 Similar to Windows section instruction.
 
-### Common for all OS
+### Extra features
 
 To enable **Selenium** check **docker-compose.yml** and uncomment related **selenium** and **php-fpm-data** sections.
 
