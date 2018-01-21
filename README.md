@@ -1,4 +1,4 @@
-# Docker-compose LAMP stack
+# Docker Compose LAMP stack
 Based on the Docker images, built to be fast, small and extendable LAMP stack.
 
 ## Stack
@@ -70,7 +70,7 @@ To enable custom configs from files, please, check image info and uncomment rela
 **PhpMyAdmin** is available under **http://172.55.0.8**
 
 
-For running multiple instances on your local machine you could update IP range or port inside **docker-compose.yml**. For this, on your instance change IPs to another range, e.g. from `172.55` to `172.54.*`. The same is for ports.
+For running multiple instances on your local machine you could update IP range or port inside **docker-compose.yml**. For this, on your instance change IPs to another range, e.g. from `172.55` to `172.54.*`. The same are for ports.
 
 You could edit your system host file for accessing containers via domain names by adding lines (or something like this based on your IP and domains, don't forget to change `extra_hosts` in `docker-compose.yml`):
 
@@ -83,7 +83,31 @@ You could edit your system host file for accessing containers via domain names b
 `172.55.0.6 ngrok.dockerlamp`
 
 ### Docker Toolbox
-Documentation in progress.
+#### Windows
+* Download and extract [Docker Compose LAMP](https://github.com/a-kom/docker-compose-lamp/releases) into your user directory.
+Like `C:\Users\UserName\docker-compose-lamp`.
+* Launch [Docker Quickstart Terminal]().
+* Go to the [docker-compose-lamp directory](): `cd /c/Users/UserName/docker-compose-lamp`.
+* Run `docker-compose up -d`
+* Launch [Kitematic (Alpha)]().
+* Go to *NGINX* container and press *Settings* [tab]().
+* Press Hostname/Ports [subtab]().
+* Update *Published IP:PORT* with your value, e.g. [`192.168.99.100:80`]() and press Save.
+* Navigate to a browser http://192.168.99.100/info.php and check that NGINX container is available from a [browser]().
+* Do the same thing with all other containers that you need to access in a browser. Don't forget, that `80` port is now busy, so
+you could attach other containers to some other ports, like `8080`, `9080`, etc...
+
+To enable **Selenium** check **docker-compose.yml** and uncomment related **selenium** and **php-fpm-data** sections.
+
+To enable custom configs from files, please, check image info and uncomment related image volumes section.
+
+For running multiple instances on your local machine you could update IP range or port inside **docker-compose.yml**. For this, on your instance change IPs to another range, e.g. from `172.55` to `172.54.*`. The same are for ports.
+
+You could edit your system host file for accessing some containers via domain name by adding line (or something like this based on your IP and domains, don't forget to change `extra_hosts` in `docker-compose.yml`) like this:
+`192.168.99.100 site.dockerlamp`
+
+### MacOS
+Similar to Windows section instruction.
 
 ## Documentation
 See READMEs for more details, like environment variables for images:
