@@ -9,7 +9,7 @@ Based on the Docker images, built to be fast, small and extendable LAMP stack.
 * [MailHog](https://github.com/a-kom/alpine-mailhog)
 * [NGROK](https://github.com/a-kom/alpine-ngrok)
 * [Solr](https://github.com/docker-solr/docker-solr)
-* [PhpMyAdmin](https://github.com/phpmyadmin/phpmyadmin)
+* [PhpMyAdmin](https://github.com/phpmyadmin/docker)
 * [Adminer](https://github.com/TimWolla/docker-adminer)
 * [MariaDB](https://github.com/docker-library/mariadb)
 * [PostgreSQL](https://github.com/docker-library/postgres)
@@ -52,11 +52,11 @@ Install [Docker Toolbox](https://docs.docker.com/toolbox/overview).
 
 ##  Introduction
 ### Linux
-Run inside folder with **docker-compose.yml**: `docker-compose up -d`
+Run inside the folder with **docker-compose.yml**: `docker-compose up -d`
 
-To view **PHP** info with **Apache2 in MPM mode** use a link the IP: **http://172.55.0.2/info.php**.
+To view the **PHP** info with the **Apache2 in MPM mode** use the IP: **http://172.55.0.2/info.php**.
 
-To view **PHP** info with **NGINX** use the IP: **http://172.55.0.3/info.php**.
+To view the **PHP** info with the **NGINX** use the IP: **http://172.55.0.3/info.php**.
 
 **MailHog** is available under **http://172.55.0.5:8025**
 
@@ -64,7 +64,7 @@ To view **PHP** info with **NGINX** use the IP: **http://172.55.0.3/info.php**.
 
 **PhpMyAdmin** is available under **http://172.55.0.8**
 
-You could edit your system host file for accessing containers via domain names by adding lines (or something like this based on your IP and domains, don't forget to change `extra_hosts` in `docker-compose.yml`):
+You can edit your system host file for accessing containers via domain names by adding lines (or something like this based on your IP and domains, don't forget to change `extra_hosts` in `docker-compose.yml`):
 
 `172.55.0.8 phpmyadmin.dockerlamp`
 
@@ -82,14 +82,14 @@ Like `C:\Users\UserName\docker-compose-lamp`.
 * Go to the [docker-compose-lamp directory](/docs/screenshots/Docker-Quickstart-Terminal-LAMP-directory.jpg): `cd /c/Users/UserName/docker-compose-lamp`.
 * Run `docker-compose up -d`
 * Launch [Kitematic (Alpha)](/docs/screenshots/Kinematic-launch.jpg).
-* Go to *NGINX* container and press *Settings* [tab](/docs/screenshots/Kinematic-NGINX-check.jpg).
-* Press Hostname/Ports [subtab](/docs/screenshots/Kinematic-NGINX-Hostname-Ports.jpg).
-* Update *Published IP:PORT* with your value, e.g. `192.168.99.100:80` and press Save.
-* Navigate to a browser http://192.168.99.100/info.php and check that NGINX container is available from a [browser](/docs/screenshots/Docker-Compose-LAMP-check-in-browser.jpg).
+* Go to the *NGINX* container and press *Settings* [tab](/docs/screenshots/Kinematic-NGINX-check.jpg).
+* Press the Hostname/Ports [subtab](/docs/screenshots/Kinematic-NGINX-Hostname-Ports.jpg).
+* Update the *Published IP:PORT* with your value, e.g. `192.168.99.100:80` and press Save.
+* Navigate to a browser http://192.168.99.100/info.php and check that the NGINX container is available from the [browser](/docs/screenshots/Docker-Compose-LAMP-check-in-browser.jpg).
 * Do the same thing with all other containers that you need to access in a browser. Don't forget, that `80` port is now busy, so
-you could attach other containers to some other ports, like `8080`, `9080`, etc...
+you can attach other containers to some other ports, like `8080`, `9080`, etc...
 
-You could edit your system host file for accessing some containers via domain name by adding line (or something like this based on your IP and domains, don't forget to change `extra_hosts` in `docker-compose.yml`) like this:
+You can edit your system host file for accessing some containers via domain name by adding line (or something like this based on your IP and domains, don't forget to change `extra_hosts` in `docker-compose.yml`) like this:
 `192.168.99.100 site.dockerlamp`
 
 #### MacOS
@@ -98,12 +98,14 @@ Similar to Windows section instruction.
 ### Extra features
 
 To enable **Selenium** check **docker-compose.yml** and uncomment related **selenium** and **php-fpm-data** sections.
-The same for other images non enabled by default.
+The same for other images not enabled by default.
 
-To enable custom configs from files, please, check image info and uncomment related image volumes section.
+To enable custom configs from files, please, check the image info and uncomment related image volumes section.
 
+You can build own images based on base images. Check the `php-fpm` section for using custom image builds. 
+The custom PHP-FPM image sample is located in the directory - `docker/images/php-fpm`. 
 
-For running multiple instances on your local machine you could update IP range or port inside **docker-compose.yml**. For this, on your instance change IPs to another range, e.g. from `172.55` to `172.54.*`. The same are for ports.
+For running multiple instances on your local machine, you can update the IP range or ports inside **docker-compose.yml**. For this, on your instance, change IPs to another range, e.g. from `172.55` to `172.54.*`. The same are for ports.
 
 
 ## Documentation
@@ -116,7 +118,7 @@ See READMEs for more details, like environment variables for images:
 * [MailHog](https://github.com/a-kom/alpine-mailhog/blob/master/README.md)
 * [NGROK](https://github.com/a-kom/alpine-ngrok/blob/master/README.md)
 * [Solr](https://github.com/docker-solr/docker-solr)
-* [PhpMyAdmin](https://github.com/phpmyadmin/phpmyadmin)
+* [PhpMyAdmin](https://github.com/phpmyadmin/docker)
 * [Adminer](https://github.com/TimWolla/docker-adminer)
 * [MariaDB](https://github.com/docker-library/mariadb)
 * [PostgreSQL](https://github.com/docker-library/postgres)

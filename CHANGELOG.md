@@ -10,3 +10,9 @@
 * Split MailHog to be the independent container and added a dependency on MailHog to PHP-FPM.
 * Added references to MongoDB, Node.js in README.
 * Started section in the documentation for Docker Toolbox.
+
+## Docker-based LAMP stack 1.2.0
+* Added Docker Toolbox instruction and update base README.
+* Added build image for the PHP-FPM.
+* Changed base config, runtime directories structure.
+* Added docs folder.

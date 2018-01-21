@@ -4,6 +4,7 @@ services:
 ################ LAMP Stack.
     php-fpm:
 # Pls, check image tags, latest is php-7, but we have php-5 too.
+        # build: docker/images/php-fpm/.
         image: lordius/alpine-php_fpm
         # image: lordius/alpine-php_fpm:php-5
         # image: lordius/alpine-php_fpm:php-7
@@ -27,8 +28,8 @@ services:
             - ./crontasks.txt:/home/crontasks.txt
             - ./htdocs:/var/www/localhost/htdocs
             # Attach sample configs if necessary.            
-            # - ./docker-runtime/php7:/temp_configs_dir/php7            
-            # - ./docker-runtime/php5:/temp_configs_dir/php5
+            # - ./docker/runtime/php7:/temp_configs_dir/php7            
+            # - ./docker/runtime/php5:/temp_configs_dir/php5
         environment:
             DRUSH_VERSION: 8.x
             PHP_SHOW_ERRORS: 1
@@ -59,7 +60,7 @@ services:
             - php-fpm
         # Attach sample configs if necessary.            
         # volumes:
-        #     - ./docker-runtime/apache2:/temp_configs_dir/apache2
+        #     - ./docker/runtime/apache2:/temp_configs_dir/apache2
         volumes_from:
             - php-fpm
         environment:
@@ -79,7 +80,7 @@ services:
             - apache2_mpm
         # Attach sample configs if necessary.            
         # volumes:
-        #     - ./docker-runtime/nginx:/temp_configs_dir/nginx                          
+        #     - ./docker/runtime/nginx:/temp_configs_dir/nginx                          
         volumes_from:
             - php-fpm
         environment:
@@ -139,21 +140,21 @@ services:
             shared:
                 ipv4_address: 172.55.0.6
 
-    # solr:
-    #     image: solr:6.5.1
-    #     ports:
-    #         - "8983:8983"
-    #     volumes:
-    #         # Example of drupal solr core configuration. 6.x. Check image tag for correct config. 
-    #         - ./docker-runtime/solr_drupal_6_x:/opt/solr/server/solr/mycores
-    #     entrypoint:
-    #         - docker-entrypoint.sh
-    #         - solr-precreate
-    #         - dockerlamp_drupal_core
-    #     networks:
-    #         internal:        
-    #         shared:
-    #             ipv4_address: 172.55.0.7
+    solr:
+        image: solr:6.5.1
+        ports:
+            - "8983:8983"
+        volumes:
+            # Example of drupal solr core configuration. 6.x. Check image tag for correct config. 
+            - ./docker/runtime/solr:/opt/solr/server/solr/mycores
+        entrypoint:
+            - docker-entrypoint.sh
+            - solr-precreate
+            - drupal_6x_core
+        networks:
+            internal:        
+            shared:
+                ipv4_address: 172.55.0.7
 
 ################ DB managers.
 # Requires mysql container.                
@@ -192,7 +193,7 @@ services:
     mysql:
         image: mariadb:10.0
         volumes:
-            - ./docker-runtime/mysql/lib:/var/lib/mysql
+            - ./docker/runtime/mysql/lib:/var/lib/mysql
         environment:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_USER: testdrive
@@ -210,14 +211,14 @@ services:
     #         POSTGRES_USER: testdrive
     #         POSTGRES_DB: testdrive
     #     volumes:
-    #         - ./docker-runtime/postgres/data:/var/lib/postgresql/data
+    #         - ./docker/runtime/postgres/data:/var/lib/postgresql/data
     #     networks:
     #         - internal
 
     # mongo:
     #     image: mongo
     #     volumes:
-    #         - ./docker-runtime/mongo:/var/lib/mongodb
+    #         - ./docker/runtime/mongo:/var/lib/mongodb
     #     restart: always
     #     command: mongod --smallfiles --logpath=/dev/null # --quiet
     #     networks:
