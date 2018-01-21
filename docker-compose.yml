@@ -140,21 +140,21 @@ services:
             shared:
                 ipv4_address: 172.55.0.6
 
-    solr:
-        image: solr:6.5.1
-        ports:
-            - "8983:8983"
-        volumes:
-            # Example of drupal solr core configuration. 6.x. Check image tag for correct config. 
-            - ./docker/runtime/solr:/opt/solr/server/solr/mycores
-        entrypoint:
-            - docker-entrypoint.sh
-            - solr-precreate
-            - drupal_6x_core
-        networks:
-            internal:        
-            shared:
-                ipv4_address: 172.55.0.7
+    # solr:
+    #     image: solr:6.5.1
+    #     ports:
+    #         - "8983:8983"
+    #     volumes:
+    #         # Example of drupal solr core configuration. 6.x. Check image tag for correct config. 
+    #         - ./docker/runtime/solr:/opt/solr/server/solr/mycores
+    #     entrypoint:
+    #         - docker-entrypoint.sh
+    #         - solr-precreate
+    #         - drupal_6x_core
+    #     networks:
+    #         internal:        
+    #         shared:
+    #             ipv4_address: 172.55.0.7
 
 ################ DB managers.
 # Requires mysql container.                
