@@ -1,5 +1,5 @@
 # Docker-compose LAMP stack
-Based on the docker images, built to be fast, small and extendable LAMP stack.
+Based on the Docker images, built to be fast, small and extendable LAMP stack.
 
 ## Stack
 * [PHP-FPM](https://github.com/a-kom/alpine-php_fpm)
@@ -41,7 +41,14 @@ The LAMP stack consists of the following containers:
 | StandaloneFirefoxDebug    | 2.48.2             | selenium    | [selenium/standalone-firefox-debug]          |   |
 
 ## Requirements
-Install Docker (Linux, Docker for Mac or Docker for Windows (10+ Pro)). For Linux additionally install docker compose.
+### Linux
+
+Install (Docker)[https://docs.docker.com/engine/installation] and [Docker Compose](https://docs.docker.com/compose/install).
+
+### Windows, MacOS
+#### Docker Toolbox (Recommend)
+
+Install [Docker Toolbox] (https://docs.docker.com/toolbox/overview)
 
 ##  Introduction
 ### Linux
@@ -76,7 +83,6 @@ You could edit your system host file for accessing containers via domain names b
 `172.55.0.6 ngrok.dockerlamp`
 
 ### Docker Toolbox
-
 Documentation in progress.
 
 ## Documentation
