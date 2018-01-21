@@ -87,13 +87,13 @@ You could edit your system host file for accessing containers via domain names b
 * Download and extract [Docker Compose LAMP](https://github.com/a-kom/docker-compose-lamp/releases) into your user directory.
 Like `C:\Users\UserName\docker-compose-lamp`.
 * Launch Docker Quickstart Terminal.
-* Go to the [docker-compose-lamp directory](docs/screenshots/Docker Quickstart Terminal - LAMP directory.jpg): `cd /c/Users/UserName/docker-compose-lamp`.
+* Go to the [docker-compose-lamp directory](docs/screenshots/Docker-Quickstart-Terminal-LAMP-directory.jpg): `cd /c/Users/UserName/docker-compose-lamp`.
 * Run `docker-compose up -d`
-* Launch [Kitematic (Alpha)](docs/screenshots/Kinematic - launch.jpg).
-* Go to *NGINX* container and press *Settings* [tab](docs/screenshots/Kinematic - NGINX - check.jpg).
-* Press Hostname/Ports [subtab](docs/screenshots/Kinematic - NGINX - Hostname Ports.jpg).
+* Launch [Kitematic (Alpha)](docs/screenshots/Kinematic-launch.jpg).
+* Go to *NGINX* container and press *Settings* [tab](docs/screenshots/Kinematic-NGINX-check.jpg).
+* Press Hostname/Ports [subtab](docs/screenshots/Kinematic-NGINX-Hostname-Ports.jpg).
 * Update *Published IP:PORT* with your value, e.g. `192.168.99.100:80` and press Save.
-* Navigate to a browser http://192.168.99.100/info.php and check that NGINX container is available from a [browser](docs/screenshots/Docker Compose LAMP - check in browser.jpg).
+* Navigate to a browser http://192.168.99.100/info.php and check that NGINX container is available from a [browser](docs/screenshots/Docker-Compose-LAMP-check-in-browser.jpg).
 * Do the same thing with all other containers that you need to access in a browser. Don't forget, that `80` port is now busy, so
 you could attach other containers to some other ports, like `8080`, `9080`, etc...
 
