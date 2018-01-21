@@ -98,6 +98,7 @@ Similar to Windows section instruction.
 ### Extra features
 
 To enable **Selenium** check **docker-compose.yml** and uncomment related **selenium** and **php-fpm-data** sections.
+The same for other images non enabled by default.
 
 To enable custom configs from files, please, check image info and uncomment related image volumes section.
 
