@@ -6,7 +6,7 @@ Based on the Docker images, built to be fast, small and extendable LAMP stack.
 * [Apache2 with MPM mode](https://github.com/a-kom/alpine-apache)
 * [NGINX](https://github.com/a-kom/alpine-nginx)
 * [Node.js](https://github.com/nodejs/docker-node)
-* [MailHog](https://github.com/a-kom/alpine-mailhog)
+* [MailHog](https://github.com/mailhog/MailHog)
 * [NGROK](https://github.com/a-kom/alpine-ngrok)
 * [Solr](https://github.com/docker-solr/docker-solr)
 * [PhpMyAdmin](https://github.com/phpmyadmin/docker)
@@ -27,7 +27,7 @@ The LAMP stack consists of the following containers:
 | Apache                    | latest             | apache2_mpm | [lordius/alpine-apache]                      | ✓ |
 | Nginx                     | latest             | nginx       | [lordius/alpine-nginx]                       | ✓ |
 | Node.js                   | node:8.4.0-alpine  | node        | [node]                                       |   |
-| Mailhog                   | latest             | mailhog     | [lordius/alpine-mailhog]                     | ✓ |
+| Mailhog                   | latest             | mailhog     | [mailhog/mailhog]                            | ✓ |
 | NGROK                     | latest             | ngrok       | [lordius/alpine-ngrok]                       | ✓ |
 | Solr                      | 6.5.1              | solr        | [solr]                                       |   |
 | PhpMyAdmin                | latest             | phpmyadmin  | [phpmyadmin/phpmyadmin]                      | ✓ |
@@ -115,7 +115,7 @@ See READMEs for more details, like environment variables for images:
 * [Apache2 with MPM mode](https://github.com/a-kom/alpine-apache/blob/master/README.md)
 * [NGINX](https://github.com/a-kom/alpine-nginx/blob/master/README.md)
 * [Node.js](https://github.com/nodejs/docker-node)
-* [MailHog](https://github.com/a-kom/alpine-mailhog/blob/master/README.md)
+* [MailHog](https://github.com/mailhog/MailHog/blob/master/README.md)
 * [NGROK](https://github.com/a-kom/alpine-ngrok/blob/master/README.md)
 * [Solr](https://github.com/docker-solr/docker-solr)
 * [PhpMyAdmin](https://github.com/phpmyadmin/docker)

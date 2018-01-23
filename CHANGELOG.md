@@ -16,3 +16,6 @@
 * Added build image for the PHP-FPM.
 * Changed base config, runtime directories structure.
 * Added docs folder.
+
+## Docker-based LAMP stack 1.3.0
+* Switched to official Mailhog image.

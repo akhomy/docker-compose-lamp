@@ -125,7 +125,7 @@ services:
               
 ################ Extra toolkit images.
     mailhog:
-        image: lordius/alpine-mailhog
+        image: mailhog/mailhog
         networks:
             internal:
             shared:
