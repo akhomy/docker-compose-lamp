@@ -18,4 +18,4 @@
 * Added docs folder.
 
 ## Docker-based LAMP stack 1.3.0
-* Switched to official Mailhog image.
+* Switched to the official Mailhog image.
