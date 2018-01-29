@@ -48,9 +48,11 @@ services:
             PHP_SHORT_OPEN_TAG: 1
             PHP_MEMORY_LIMIT: 1024M
         networks:
-            - internal
+            internal:
+            shared:
+                ipv4_address: 172.55.0.2
         extra_hosts:
-            - "site.dockerlamp:172.55.0.3" 
+            - "site.dockerlamp:172.55.0.4" 
 
     apache2_mpm:
         image: lordius/alpine-apache
@@ -70,7 +72,7 @@ services:
         networks:
             internal:
             shared:
-                ipv4_address: 172.55.0.2
+                ipv4_address: 172.55.0.3
 
     nginx:
         image: lordius/alpine-nginx
@@ -97,7 +99,7 @@ services:
         networks:
           internal:
           shared:
-              ipv4_address: 172.55.0.3
+              ipv4_address: 172.55.0.4
 
 
 ################ Node stack.
@@ -121,7 +123,7 @@ services:
     #     networks:
     #         internal:
     #         shared:
-    #             ipv4_address: 172.55.0.4
+    #             ipv4_address: 172.55.0.5
               
 ################ Extra toolkit images.
     mailhog:
@@ -129,16 +131,16 @@ services:
         networks:
             internal:
             shared:
-                ipv4_address: 172.55.0.5
+                ipv4_address: 172.55.0.6
 
     ngrok:
         image: lordius/alpine-ngrok
         environment:
             # Here must be your container IP accesable from browser.
-            ARGS: http 172.53.0.3:80
+            ARGS: http 172.53.0.4:80
         networks:
             shared:
-                ipv4_address: 172.55.0.6
+                ipv4_address: 172.55.0.7
 
     # solr:
     #     image: solr:6.5.1
@@ -154,7 +156,7 @@ services:
     #     networks:
     #         internal:        
     #         shared:
-    #             ipv4_address: 172.55.0.7
+    #             ipv4_address: 172.55.0.8
 
 ################ DB managers.
 # Requires mysql container.                
@@ -171,7 +173,7 @@ services:
         networks:
             internal:
             shared:
-                ipv4_address: 172.55.0.8
+                ipv4_address: 172.55.0.9
                 
     # adminer:
     #     image: adminer
@@ -187,7 +189,7 @@ services:
     #     networks:
     #         internal:
     #         shared:
-    #             ipv4_address: 172.55.0.9
+    #             ipv4_address: 172.55.0.10
 
 ################ Database images.
     mysql:
@@ -253,7 +255,7 @@ services:
     #         - NET_RAW
     #     networks:
     #         shared:
-    #             ipv4_address: 172.55.0.10
+    #             ipv4_address: 172.55.0.11
 
 
 

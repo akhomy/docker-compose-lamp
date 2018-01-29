@@ -54,25 +54,26 @@ Install [Docker Toolbox](https://docs.docker.com/toolbox/overview).
 ### Linux
 Run inside the folder with **docker-compose.yml**: `docker-compose up -d`
 
-To view the **PHP** info with the **Apache2 in MPM mode** use the IP: **http://172.55.0.2/info.php**.
+To view the **PHP** info with the **Apache2 in MPM mode** use the IP: **http://172.55.0.3/info.php**.
 
-To view the **PHP** info with the **NGINX** use the IP: **http://172.55.0.3/info.php**.
+To view the **PHP** info with the **NGINX** use the IP: **http://172.55.0.4/info.php**.
 
-**MailHog** is available under **http://172.55.0.5:8025**
+**MailHog** is available under **http://172.55.0.6:8025**
 
-**NGROK** is available under **http://172.55.0.6:4040**
+**NGROK** is available under **http://172.55.0.7:4040**
 
-**PhpMyAdmin** is available under **http://172.55.0.8**
+**PhpMyAdmin** is available under **http://172.55.0.9**
 
 You can edit your system host file for accessing containers via domain names by adding lines (or something like this based on your IP and domains, don't forget to change `extra_hosts` in `docker-compose.yml`):
 
-`172.55.0.8 phpmyadmin.dockerlamp`
+`172.55.0.4 site.dockerlamp`
 
-`172.55.0.3 site.dockerlamp`
+`172.55.0.6 mailhog.dockerlamp`
 
-`172.55.0.5 mailhog.dockerlamp`
+`172.55.0.7 ngrok.dockerlamp`
 
-`172.55.0.6 ngrok.dockerlamp`
+`172.55.0.9 phpmyadmin.dockerlamp`
+
 
 ### Docker Toolbox
 #### Windows

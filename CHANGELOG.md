@@ -19,3 +19,8 @@
 
 ## Docker-based LAMP stack 1.3.0
 * Switched to the official Mailhog image.
+
+## Docker-based LAMP stack 1.4.0
+* Added IP for PHP-FPM container.
+* Checked work of Selenium and PHP-FPM.
+
