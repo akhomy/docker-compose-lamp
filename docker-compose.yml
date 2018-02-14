@@ -104,7 +104,7 @@ services:
 
 ################ Node stack.
     # node:
-    #     image: node:8.4.0-alpine
+    #     image: node:alpine
     #     links:
     #         - mongo
     #     depends_on:
@@ -143,7 +143,7 @@ services:
                 ipv4_address: 172.55.0.7
 
     # solr:
-    #     image: solr:6.5.1
+    #     image: solr:6-alpine
     #     ports:
     #         - "8983:8983"
     #     volumes:
@@ -193,7 +193,7 @@ services:
 
 ################ Database images.
     mysql:
-        image: mariadb:10.0
+        image: mariadb
         volumes:
             - ./docker/runtime/mysql/lib:/var/lib/mysql
         environment:
@@ -206,7 +206,7 @@ services:
             - internal
 
     # postgres:
-    #     image: postgres
+    #     image: postgres:alpine
     #     restart: always
     #     environment:
     #         POSTGRES_PASSWORD: testdrive
@@ -228,12 +228,12 @@ services:
 
 ################ Cache-memory images.
     # redis:
-    #     image: redis
+    #     image: redis:alpine
     #     networks:
     #         - internal
 
     # memcached:
-    #     image: memcached
+    #     image: memcached:alpine
     #     networks:
     #         - internal
 

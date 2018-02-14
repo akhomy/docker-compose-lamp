@@ -24,3 +24,9 @@
 * Added IP for PHP-FPM container.
 * Checked work of Selenium and PHP-FPM.
 
+## Docker-based LAMP stack 1.5.0
+* Updated Node image to the last node:alpine version.
+* Updated Solr image to the alpine-6 version.
+* Updated Postgres image to the postgres:alpine version.
+* Updated Redis image to the redis:alpine version.
+* Updated Memcached image to the memcahed:alpine version.

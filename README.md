@@ -26,17 +26,17 @@ The LAMP stack consists of the following containers:
 | PHP-FPM                   | php-7, php-5       | php-fpm     | [lordius/alpine-php_fpm]                     | ✓ |
 | Apache                    | latest             | apache2_mpm | [lordius/alpine-apache]                      | ✓ |
 | Nginx                     | latest             | nginx       | [lordius/alpine-nginx]                       | ✓ |
-| Node.js                   | node:8.4.0-alpine  | node        | [node]                                       |   |
+| Node.js                   | node:alpine        | node        | [node]                                       |   |
 | Mailhog                   | latest             | mailhog     | [mailhog/mailhog]                            | ✓ |
 | NGROK                     | latest             | ngrok       | [lordius/alpine-ngrok]                       | ✓ |
-| Solr                      | 6.5.1              | solr        | [solr]                                       |   |
+| Solr                      | 6-alpine           | solr        | [solr]                                       |   |
 | PhpMyAdmin                | latest             | phpmyadmin  | [phpmyadmin/phpmyadmin]                      | ✓ |
 | Adminer                   | latest             | adminer     | [adminer]                                    |   |
-| MariaDB                   | 10.0               | mariadb     | [mariadb]                                    | ✓ |
-| PostgreSQL                | latest             | postgres    | [postgres]                                   |   |
+| MariaDB                   | latest             | mariadb     | [mariadb]                                    | ✓ |
+| PostgreSQL                | postgres:alpine    | postgres    | [postgres]                                   |   |
 | MongoDB                   | latest             | mongo       | [mongo]                                      |   |
-| Redis                     | latest             | redis       | [redis]                                      |   |
-| Memcached                 | latest             | memcached   | [memcached]                                  |   |
+| Redis                     | redis:alpine       | redis       | [redis]                                      |   |
+| Memcached                 | memcached:alpine   | memcached   | [memcached]                                  |   |
 | PHP-FPM-DATA              | php-7, php-5       | php-fpm-data| [lordius/alpine-php_fpm]                     |   |
 | StandaloneFirefoxDebug    | 2.48.2             | selenium    | [selenium/standalone-firefox-debug]          |   |
 
