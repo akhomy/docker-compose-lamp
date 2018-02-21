@@ -66,6 +66,7 @@ services:
         volumes_from:
             - php-fpm
         environment:
+            APACHE_TIMEOUT: 300
             DOCUMENT_ROOT: /var/www/localhost/htdocs
             PROXY_PASS: fcgi://php-fpm:7000/var/www/localhost/htdocs
             APACHE_LISTEN_PORT: 80
