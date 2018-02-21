@@ -39,7 +39,7 @@ services:
             PHP_SENDMAIL_HOST: mailhog
             PHP_SENDMAIL_PORT: 1025
             PHP_XDEBUG_ENABLED: 1
-            PHP_XDEBUG_PORT: 8010
+            PHP_XDEBUG_PORT: 9000
             PHP_MAX_EXECUTION_TIME: 250
             PHP_UPLOAD_MAX_FILESIZE: 1024M
             PHP_POST_MAX_SIZE: 756M
