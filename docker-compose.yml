@@ -145,8 +145,6 @@ services:
 
     # solr:
     #     image: solr:6-alpine
-    #     ports:
-    #         - "8983:8983"
     #     volumes:
     #         # Example of drupal solr core configuration. 6.x. Check image tag for correct config. 
     #         - ./docker/runtime/solr:/opt/solr/server/solr/mycores
