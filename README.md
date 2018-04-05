@@ -11,7 +11,7 @@ Based on the Docker images, built to be fast, small and extendable LAMP stack.
 * [Solr](https://github.com/docker-solr/docker-solr)
 * [PhpMyAdmin](https://github.com/phpmyadmin/docker)
 * [Adminer](https://github.com/TimWolla/docker-adminer)
-* [MariaDB](https://github.com/docker-library/mariadb)
+* [MySQL](https://github.com/docker-library/mysql)
 * [PostgreSQL](https://github.com/docker-library/postgres)
 * [MongoDB](https://github.com/docker-library/mongo)
 * [Redis](https://github.com/docker-library/redis)
@@ -32,7 +32,7 @@ The LAMP stack consists of the following containers:
 | Solr                      | 6-alpine           | solr        | [solr]                                       |   |
 | PhpMyAdmin                | latest             | phpmyadmin  | [phpmyadmin/phpmyadmin]                      | ✓ |
 | Adminer                   | latest             | adminer     | [adminer]                                    |   |
-| MariaDB                   | latest             | mariadb     | [mariadb]                                    | ✓ |
+| MySQL                     | latest             | mysql       | [mysql]                                      | ✓ |
 | PostgreSQL                | postgres:alpine    | postgres    | [postgres]                                   |   |
 | MongoDB                   | latest             | mongo       | [mongo]                                      |   |
 | Redis                     | redis:alpine       | redis       | [redis]                                      |   |
@@ -93,6 +93,16 @@ you can attach other containers to some other ports, like `8080`, `9080`, etc...
 You can edit your system host file for accessing some containers via domain name by adding line (or something like this based on your IP and domains, don't forget to change `extra_hosts` in `docker-compose.yml`) like this:
 `192.168.99.100 site.dockerlamp`
 
+##### Docker Toolbox Known Issues
+* (MariaDB doesn't start) https://github.com/a-kom/docker-compose-lamp/issues/5
+* (MariaDB is aborting always) https://github.com/a-kom/docker-compose-lamp/issues/4
+
+If you want to archive your project on Linux and extract to use on Windows with Docker Toolbox just remove `ibdata` and `ib_logfile*` files in your MySQL data directory. Uncomment in `docker-compose.yml` section `# build: docker/images/mysql/.` and remove section `image: mysql`. Then run a command:
+`docker-compose stop && docker-compose rm -f && docker-compose up --build -d`
+To verify work check that MySQL container run a command:
+`docker-compose ps`.
+
+
 #### MacOS
 Similar to Windows section instruction.
 
@@ -121,7 +131,7 @@ See READMEs for more details, like environment variables for images:
 * [Solr](https://github.com/docker-solr/docker-solr)
 * [PhpMyAdmin](https://github.com/phpmyadmin/docker)
 * [Adminer](https://github.com/TimWolla/docker-adminer)
-* [MariaDB](https://github.com/docker-library/mariadb)
+* [MySQL](https://github.com/docker-library/mysql)
 * [PostgreSQL](https://github.com/docker-library/postgres)
 * [MongoDB](https://github.com/docker-library/mongo)
 * [Redis](https://github.com/docker-library/redis)

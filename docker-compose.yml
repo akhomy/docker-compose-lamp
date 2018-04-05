@@ -192,7 +192,8 @@ services:
 
 ################ Database images.
     mysql:
-        image: mariadb
+        # image: mysql
+        build: docker/images/mysql/.
         volumes:
             - ./docker/runtime/mysql/lib:/var/lib/mysql
         environment:
