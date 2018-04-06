@@ -99,7 +99,7 @@ You can edit your system host file for accessing some containers via domain name
 
 If you want to archive your project on Linux and extract to use on Windows with Docker Toolbox just remove `ibdata` and `ib_logfile*` files in your MySQL data directory. Uncomment in `docker-compose.yml` section `# build: docker/images/mysql/.` and remove section `image: mysql`. Then run a command:
 `docker-compose stop && docker-compose rm -f && docker-compose up --build -d`
-To verify work check that MySQL container run a command:
+To verify work check that MySQL container works run a command:
 `docker-compose ps`.
 
 
