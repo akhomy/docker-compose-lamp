@@ -15,4 +15,7 @@ RUN cd /tmp/xhprof/extension && phpize && \
 RUN mkdir /var/xhprof
 RUN chmod -R 777 /var/xhprof
 # Add graphviz for visual reports.
-RUN apk add --no-cache graphviz
+# Add graphviz for visual reports.
+RUN apk add --no-cache graphviz \
+                       ttf-freefont
+
