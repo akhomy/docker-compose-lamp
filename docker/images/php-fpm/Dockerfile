@@ -14,3 +14,5 @@ RUN cd /tmp/xhprof/extension && phpize && \
    echo 'xhprof.output_dir=/var/xhprof' >> /etc/php7/conf.d/xhprof.ini
 RUN mkdir /var/xhprof
 RUN chmod -R 777 /var/xhprof
+# Add graphviz for visual reports.
+RUN apk add --no-cache graphviz
