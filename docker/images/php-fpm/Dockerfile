@@ -11,4 +11,6 @@ RUN cd /tmp/xhprof/extension && phpize && \
    make && \
    make install && \
    echo 'extension=xhprof.so' > /etc/php7/conf.d/xhprof.ini && \
-   echo 'xhprof.output_dir=/tmp/xhprof/profiler' >> /etc/php7/conf.d/xhprof.ini
+   echo 'xhprof.output_dir=/var/xhprof' >> /etc/php7/conf.d/xhprof.ini
+RUN mkdir /var/xhprof
+RUN chmod -R 777 /var/xhprof
