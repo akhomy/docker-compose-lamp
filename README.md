@@ -23,7 +23,7 @@ The LAMP stack consists of the following containers:
 
 | Container | Versions | Service name | Image | Enabled by default |
 | --------- | -------- | ------------ | ----- | ------------------ |
-| PHP-FPM                   | php-7, php-7.1, php-5       | php-fpm     | [lordius/alpine-php_fpm]                     | ✓ |
+| PHP-FPM                   | php-7, php-7.1, php-7.0, php-5       | php-fpm     | [lordius/alpine-php_fpm]                     | ✓ |
 | Apache                    | latest             | apache2_mpm | [lordius/alpine-apache]                      | ✓ |
 | Nginx                     | latest             | nginx       | [lordius/alpine-nginx]                       | ✓ |
 | Node.js                   | node:alpine        | node        | [node]                                       |   |
