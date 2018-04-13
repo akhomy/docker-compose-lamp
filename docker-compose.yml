@@ -8,6 +8,7 @@ services:
         image: lordius/alpine-php_fpm
         # image: lordius/alpine-php_fpm:php-5
         # image: lordius/alpine-php_fpm:php-7
+        # image: lordius/alpine-php_fpm:php-7.1
         links:
             - mailhog            
             - mysql            
