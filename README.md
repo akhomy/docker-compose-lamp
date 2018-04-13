@@ -23,7 +23,7 @@ The LAMP stack consists of the following containers:
 
 | Container | Versions | Service name | Image | Enabled by default |
 | --------- | -------- | ------------ | ----- | ------------------ |
-| PHP-FPM                   | php-7, php-7.1, php-7.0, php-5       | php-fpm     | [lordius/alpine-php_fpm]                     | ✓ |
+| PHP-FPM                   | latest, php-7, php-7.1, php-7.0, php-5       | php-fpm     | [lordius/alpine-php_fpm]                     | ✓ |
 | Apache                    | latest             | apache2_mpm | [lordius/alpine-apache]                      | ✓ |
 | Nginx                     | latest             | nginx       | [lordius/alpine-nginx]                       | ✓ |
 | Node.js                   | node:alpine        | node        | [node]                                       |   |
@@ -37,7 +37,7 @@ The LAMP stack consists of the following containers:
 | MongoDB                   | latest             | mongo       | [mongo]                                      |   |
 | Redis                     | redis:alpine       | redis       | [redis]                                      |   |
 | Memcached                 | memcached:alpine   | memcached   | [memcached]                                  |   |
-| PHP-FPM-DATA              | php-7, php-5       | php-fpm-data| [lordius/alpine-php_fpm]                     |   |
+| PHP-FPM-DATA              | latest, php-7, php-7.1, php-7.0, php-5       | php-fpm-data| [lordius/alpine-php_fpm]                     |   |
 | StandaloneFirefoxDebug    | 2.48.2             | selenium    | [selenium/standalone-firefox-debug]          |   |
 
 ## Requirements
