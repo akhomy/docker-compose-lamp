@@ -1,9 +1,9 @@
-version: "2"
+version: "3"
 
 services:
 ################ LAMP Stack.
     php-fpm:
-# Pls, check image tags, latest is php-7, but we have php-5 too.
+        # Pls, check image tags, latest is php-7, but we have php-5 too.
         # build: docker/images/php-fpm/.
         image: lordius/alpine-php_fpm
         # image: lordius/alpine-php_fpm:php-5
@@ -50,7 +50,7 @@ services:
             PHP_SHORT_OPEN_TAG: 1
             PHP_MEMORY_LIMIT: 1024M
         networks:
-            internal:
+            internal: {}
             shared:
                 ipv4_address: 172.55.0.2
         extra_hosts:
@@ -61,19 +61,18 @@ services:
         links:
             - php-fpm
         depends_on:
-            - php-fpm
-        # Attach sample configs if necessary.            
-        # volumes:
-        #     - ./docker/runtime/apache2:/temp_configs_dir/apache2
-        volumes_from:
-            - php-fpm
+            - php-fpm    
+        volumes:
+            - ./htdocs:/var/www/localhost/htdocs 
+            # Attach sample configs if necessary.
+            # - ./docker/runtime/apache2:/temp_configs_dir/apache2
         environment:
             APACHE_TIMEOUT: 300
             DOCUMENT_ROOT: /var/www/localhost/htdocs
             PROXY_PASS: fcgi://php-fpm:7000/var/www/localhost/htdocs
             APACHE_LISTEN_PORT: 80
         networks:
-            internal:
+            internal: {}
             shared:
                 ipv4_address: 172.55.0.3
 
@@ -82,12 +81,11 @@ services:
         links:
             - apache2_mpm
         depends_on:
-            - apache2_mpm
-        # Attach sample configs if necessary.            
-        # volumes:
-        #     - ./docker/runtime/nginx:/temp_configs_dir/nginx                          
-        volumes_from:
-            - php-fpm
+            - apache2_mpm         
+        volumes:
+            - ./htdocs:/var/www/localhost/htdocs
+        # Attach sample configs if necessary.
+        #   - ./docker/runtime/nginx:/temp_configs_dir/nginx                          
         environment:
             KEEPALIVE_TIMEOUT: 3000
             LISTEN_PORT: 80
@@ -100,7 +98,7 @@ services:
             SEND_TIMEOUT: 3000
             PROXY_PASS: http://apache2_mpm:80
         networks:
-          internal:
+          internal: {}
           shared:
               ipv4_address: 172.55.0.4
 
@@ -124,7 +122,7 @@ services:
     #     # command: ash -c "PORT=3000 DEBUG=htdocs:* npm start"
     #     command: ash -c "PORT=3000 node server.js"
     #     networks:
-    #         internal:
+    #         internal: {}
     #         shared:
     #             ipv4_address: 172.55.0.5
               
@@ -132,7 +130,7 @@ services:
     mailhog:
         image: mailhog/mailhog
         networks:
-            internal:
+            internal: {}
             shared:
                 ipv4_address: 172.55.0.6
 
@@ -155,7 +153,7 @@ services:
     #         - solr-precreate
     #         - drupal_6x_core
     #     networks:
-    #         internal:        
+    #         internal: {}
     #         shared:
     #             ipv4_address: 172.55.0.8
 
@@ -172,7 +170,7 @@ services:
             PHP_UPLOAD_MAX_FILESIZE: 1G
             PHP_MAX_INPUT_VARS: 1G
         networks:
-            internal:
+            internal: {}
             shared:
                 ipv4_address: 172.55.0.9
                 
@@ -188,7 +186,7 @@ services:
     #         - mongo
     #     restart: always
     #     networks:
-    #         internal:
+    #         internal: {}
     #         shared:
     #             ipv4_address: 172.55.0.10
 
@@ -259,7 +257,49 @@ services:
     #         shared:
     #             ipv4_address: 172.55.0.11
 
+    # php-fpm-xhprof:
+    #     build: docker/images/php-fpm/.
+    #     volumes:
+    #         - ./xhprof:/var/www/localhost/htdocs
+    #         - ./docker/runtime/xhprof:/var/xhprof
+    #         # Attach sample configs if necessary.            
+    #         # - ./docker/runtime/php7:/temp_configs_dir/php7            
+    #         # - ./docker/runtime/php5:/temp_configs_dir/php5
+    #     environment:
+    #         PHP_SHOW_ERRORS: 1
+    #         CRONTAB_ENABLED: 0
+    #         PHP_FPM_PORT: 7000
+    #         PHP_MAX_EXECUTION_TIME: 250
+    #         PHP_UPLOAD_MAX_FILESIZE: 1024M
+    #         PHP_POST_MAX_SIZE: 756M
+    #         PHP_ALLOW_URL_FOPEN: "On"
+    #         PHP_ALWAYS_POPULATE_RAW_POST_DATA: -1
+    #         PHP_SHORT_OPEN_TAG: 1
+    #         PHP_MEMORY_LIMIT: 1024M
+    #     networks:
+    #         internal: {}
+    #         shared:
+    #             ipv4_address: 172.58.0.12
+    #     extra_hosts:
+    #         - "xhprof.dockerlamp:172.58.0.13" 
 
+    # apache2_mpm-xhprof:
+    #     image: lordius/alpine-apache
+    #     links:
+    #         - php-fpm-xhprof
+    #     depends_on:
+    #         - php-fpm-xhprof
+    #     volumes:
+    #         - ./htdocs:/var/www/localhost/htdocs 
+    #     environment:
+    #         APACHE_TIMEOUT: 300
+    #         DOCUMENT_ROOT: /var/www/localhost/htdocs/xhprof_html
+    #         PROXY_PASS: fcgi://php-fpm-xhprof:7000/var/www/localhost/htdocs/xhprof_html
+    #         APACHE_LISTEN_PORT: 80
+    #     networks:
+    #         internal:
+    #         shared:
+    #             ipv4_address: 172.58.0.13
 
 networks:
   internal:
@@ -267,10 +307,7 @@ networks:
       internal: "true"
     driver: bridge      
   shared:
-    driver_opts:
-      enable_ipv6: "true"
     driver: bridge
     ipam:
      config:
        - subnet: 172.55.0.0/16
-         gateway: 172.55.0.1
