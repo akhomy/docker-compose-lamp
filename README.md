@@ -17,28 +17,30 @@ Based on the Docker images, built to be fast, small and extendable LAMP stack.
 * [Redis](https://github.com/docker-library/redis)
 * [Memcached](https://github.com/docker-library/memcached)
 * [StandaloneFirefoxDebug](https://github.com/SeleniumHQ/docker-selenium/tree/master/StandaloneFirefoxDebug)
+* [XHProf](https://github.com/longxinH/xhprof)
 
 
 The LAMP stack consists of the following containers:
 
 | Container | Versions | Service name | Image | Enabled by default |
 | --------- | -------- | ------------ | ----- | ------------------ |
-| PHP-FPM                   | latest, php-7, php-7.1, php-7.0, php-5       | php-fpm     | [lordius/alpine-php_fpm]                     | ✓ |
-| Apache                    | latest             | apache2_mpm | [lordius/alpine-apache]                      | ✓ |
-| Nginx                     | latest             | nginx       | [lordius/alpine-nginx]                       | ✓ |
-| Node.js                   | node:alpine        | node        | [node]                                       |   |
-| Mailhog                   | latest             | mailhog     | [mailhog/mailhog]                            | ✓ |
-| NGROK                     | latest             | ngrok       | [lordius/alpine-ngrok]                       | ✓ |
-| Solr                      | 6-alpine           | solr        | [solr]                                       |   |
-| PhpMyAdmin                | latest             | phpmyadmin  | [phpmyadmin/phpmyadmin]                      | ✓ |
-| Adminer                   | latest             | adminer     | [adminer]                                    |   |
-| MySQL                     | latest             | mysql       | [mysql]                                      | ✓ |
-| PostgreSQL                | postgres:alpine    | postgres    | [postgres]                                   |   |
-| MongoDB                   | latest             | mongo       | [mongo]                                      |   |
-| Redis                     | redis:alpine       | redis       | [redis]                                      |   |
-| Memcached                 | memcached:alpine   | memcached   | [memcached]                                  |   |
-| PHP-FPM-DATA              | latest, php-7, php-7.1, php-7.0, php-5       | php-fpm-data| [lordius/alpine-php_fpm]                     |   |
-| StandaloneFirefoxDebug    | 2.48.2             | selenium    | [selenium/standalone-firefox-debug]          |   |
+| PHP-FPM                   | latest, php-7, php-7.1, php-7.0, php-5       | php-fpm                     | [lordius/alpine-php_fpm]                     | ✓ |
+| Apache2                   | latest                                       | apache2_mpm                 | [lordius/alpine-apache]                      | ✓ |
+| Nginx                     | latest                                       | nginx                       | [lordius/alpine-nginx]                       | ✓ |
+| Node.js                   | node:alpine                                  | node                        | [node]                                       |   |
+| Mailhog                   | latest                                       | mailhog                     | [mailhog/mailhog]                            | ✓ |
+| NGROK                     | latest                                       | ngrok                       | [lordius/alpine-ngrok]                       | ✓ |
+| Solr                      | 6-alpine                                     | solr                        | [solr]                                       |   |
+| PhpMyAdmin                | latest                                       | phpmyadmin                  | [phpmyadmin/phpmyadmin]                      | ✓ |
+| Adminer                   | latest                                       | adminer                     | [adminer]                                    |   |
+| MySQL                     | latest                                       | mysql                       | [mysql]                                      | ✓ |
+| PostgreSQL                | postgres:alpine                              | postgres                    | [postgres]                                   |   |
+| MongoDB                   | latest                                       | mongo                       | [mongo]                                      |   |
+| Redis                     | redis:alpine                                 | redis                       | [redis]                                      |   |
+| Memcached                 | memcached:alpine                             | memcached                   | [memcached]                                  |   |
+| PHP-FPM-DATA              | latest, php-7, php-7.1, php-7.0, php-5       | php-fpm-data                | [lordius/alpine-php_fpm]                     |   |
+| PHP-FPM-XHPROF            | latest, php-7, php-7.1, php-7.0, php-5       | php-fpm-xhprof              | [lordius/alpine-php_fpm]                     |   |
+| Apache2                   | latest                                       | apache2_mpm-xhprof          | [lordius/alpine-apache]                      |   |
 
 ## Requirements
 ### Linux
@@ -137,6 +139,7 @@ See READMEs for more details, like environment variables for images:
 * [Redis](https://github.com/docker-library/redis)
 * [Memcached](https://github.com/docker-library/memcached)
 * [StandaloneFirefoxDebug](https://github.com/SeleniumHQ/docker-selenium/tree/master/StandaloneFirefoxDebug)
+* [XHProf](https://github.com/longxinH/xhprof)
 
 ## License
 

@@ -33,7 +33,13 @@
 * Updated Memcached image to the memcahed:alpine version.
 
 ## Docker Compose LAMP stack 1.6.0
-* Added example tools to php-fpm image.
+* Added example tools to PHP-FPM image.
 * Switched from MariaDB to MySQL docker image.
 * Added a sample image build based on docker MySQL image to fix Windows Docker Toolbox issue.
 * Updated README.md links and added extra info for Docker Toolbox.
+
+## Docker Compose LAMP stack 1.7.0
+* Updated README, added new tags for PHP-FPM image.
+* Switched to docker-compose 3 version.
+* Added example of installing XHProf for PHP-7 and necessary utils.
+* Update docker-compose, some common typos and example of PHP-FPM-XHPROF container.
