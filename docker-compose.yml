@@ -33,6 +33,8 @@ services:
             # - ./docker/runtime/php7:/temp_configs_dir/php7            
             # - ./docker/runtime/php5:/temp_configs_dir/php5
         environment:
+            LINES: 100
+            COLUMNS: 100
             DRUSH_VERSION: 8.x
             PHP_SHOW_ERRORS: 1
             CRONTAB_ENABLED: 0
