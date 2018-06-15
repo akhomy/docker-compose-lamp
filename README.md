@@ -33,7 +33,7 @@ The LAMP stack consists of the following containers:
 | Solr                      | 6-alpine                                     | solr                        | [solr]                                       |   |
 | PhpMyAdmin                | latest                                       | phpmyadmin                  | [phpmyadmin/phpmyadmin]                      | ✓ |
 | Adminer                   | latest                                       | adminer                     | [adminer]                                    |   |
-| MySQL                     | latest                                       | mysql                       | [mysql]                                      | ✓ |
+| MySQL                     |  5.7                                         | mysql                       | [mysql]                                      | ✓ |
 | PostgreSQL                | postgres:alpine                              | postgres                    | [postgres]                                   |   |
 | MongoDB                   | latest                                       | mongo                       | [mongo]                                      |   |
 | Redis                     | redis:alpine                                 | redis                       | [redis]                                      |   |
