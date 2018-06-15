@@ -43,3 +43,9 @@
 * Switched to docker-compose 3 version.
 * Added example of installing XHProf for PHP-7 and necessary utils.
 * Update docker-compose, some common typos and example of PHP-FPM-XHPROF container.
+
+## Docker Compose LAMP stack 1.7.0
+* Updated README, fixed issue with latest MySQL image.
+* Added new ENV variables `LINES`, `COLUMNS` for PHP-FPM container.
+* Fixed Dockerfile for LAMP build MySQL image.
+* Added db.php to test connection.

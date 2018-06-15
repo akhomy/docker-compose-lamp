@@ -120,6 +120,11 @@ The custom PHP-FPM image sample is located in the directory - `docker/images/php
 
 For running multiple instances on your local machine, you can update the IP range or ports inside **docker-compose.yml**. For this, on your instance, change IPs to another range, e.g. from `172.55` to `172.54.*`. The same are for ports.
 
+### How connect to MySQL, PostgreSQL, other DBs.
+
+Check `htdocs/db.php` as example of connection to MySQL. However, the main difference is in the host, 
+you need to use service name as host.
+
 
 ## Documentation
 See READMEs for more details, like environment variables for images:
