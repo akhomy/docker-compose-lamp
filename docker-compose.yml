@@ -194,7 +194,7 @@ services:
 
 ################ Database images.
     mysql:
-        image: mysql
+        image: mysql:5.7
         # build: docker/images/mysql/.
         volumes:
             - ./docker/runtime/mysql/lib:/var/lib/mysql
