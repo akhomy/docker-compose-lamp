@@ -12,27 +12,27 @@ syncs:
     sync_excludes: ['.gitignore', '.git/', '.idea/']
     host_disk_mount_mode: 'cached'
   solr-${PROJECT_NAME}-docker-sync:
-    src: './docker-web/runtime/solr'
+    src: './docker/runtime/solr'
     sync_userid: '1000'
     sync_excludes: ['.gitignore', '.git/', '.idea/']
     host_disk_mount_mode: 'cached'
   xhprof-${PROJECT_NAME}-docker-sync:
-    src: './docker-web/tools/php/xhprof'
+    src: './docker/tools/php/xhprof'
     sync_userid: '1000'
     sync_excludes: ['.gitignore', '.git/', '.idea/']
     host_disk_mount_mode: 'cached'
   mysql-${PROJECT_NAME}-docker-sync:
-    src: './docker-web/runtime/mysql'
+    src: './docker/runtime/mysql'
     sync_userid: '1000'
     sync_excludes: ['.gitignore', '.git/', '.idea/']
     host_disk_mount_mode: 'cached'
   postgres-${PROJECT_NAME}-docker-sync:
-    src: './docker-web/runtime/postgres'
+    src: './docker/runtime/postgres'
     sync_userid: '1000'
     sync_excludes: ['.gitignore', '.git/', '.idea/']
     host_disk_mount_mode: 'cached'
   mongo-${PROJECT_NAME}-docker-sync:
-    src: './docker-web/runtime/mongo'
+    src: './docker/runtime/mongo'
     sync_userid: '1000'
     sync_excludes: ['.gitignore', '.git/', '.idea/']
     host_disk_mount_mode: 'cached'

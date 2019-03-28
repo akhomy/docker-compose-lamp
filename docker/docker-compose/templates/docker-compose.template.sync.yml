@@ -5,7 +5,7 @@ services:
     php-fpm:
         container_name: "${PROJECT_NAME}-php-fpm"
         # Pls, check image tags, latest is php-7, but we have php-5 too.
-        # build: docker-web/images/php-fpm/.
+        # build: docker/images/php-fpm/.
         image: akhomy/alpine-php-fpm:${PHP_FPM_TAG}
         # image: akhomy/alpine-php-fpm:php-5
         # image: akhomy/alpine-php-fpm:php-7
@@ -207,7 +207,7 @@ services:
     mysql:
         container_name: "${PROJECT_NAME}-mysql"
         image: mysql:${MYSQL_TAG}
-        # build: docker-web/images/mysql/.
+        # build: docker/images/mysql/.
         volumes:
             - mysql:${MYSQL_LIB_PATH}:cached
             - mysql-docker-sync:${MYSQL_LIB_PATH}:nocopy
@@ -327,25 +327,25 @@ volumes:
         driver: local
         driver_opts:
             type: none
-            device: $PWD/docker-web/runtime/solr
+            device: $PWD/docker/runtime/solr
             o: bind
     mysql:
         driver: local
         driver_opts:
             type: none
-            device: $PWD/docker-web/runtime/mysql
+            device: $PWD/docker/runtime/mysql
             o: bind
     postgres:
         driver: local
         driver_opts:
             type: none
-            device: $PWD/docker-web/runtime/postgres/data
+            device: $PWD/docker/runtime/postgres/data
             o: bind
     mongo:
         driver: local
         driver_opts:
             type: none
-            device: $PWD/docker-web/runtime/mongo
+            device: $PWD/docker/runtime/mongo
             o: bind
     web-docker-sync:
         name: "web-${PROJECT_NAME}-docker-sync"

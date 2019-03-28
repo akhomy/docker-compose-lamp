@@ -5,7 +5,7 @@ services:
     php-fpm:
         container_name: "${PROJECT_NAME}-php-fpm"
         # Pls, check image tags, latest is php-7, but we have php-5 too.
-        # build: docker-web/images/php-fpm/.
+        # build: docker/images/php-fpm/.
         image: akhomy/alpine-php-fpm:${PHP_FPM_TAG}
         # image: akhomy/alpine-php-fpm:php-5
         # image: akhomy/alpine-php-fpm:php-7
@@ -13,7 +13,8 @@ services:
         # image: akhomy/alpine-php-fpm:php-7.0
         volumes:
             - ./crontasks.txt:/home/crontasks.txt
-            - web:${PHP_FPM_ROOT}
+            - web:${PHP_FPM_ROOT}:cached
+            - web-docker-sync:${PHP_FPM_ROOT}:nocopy
             # Attaches sample configs if necessary.
             - ${PHP_TEMP_CONFIGS}
         environment:
@@ -48,7 +49,8 @@ services:
         container_name: "${PROJECT_NAME}-apache-fpm"
         image: akhomy/alpine-apache:${APACHE_TAG}
         volumes:
-            - web:${APACHE_DOCUMENT_ROOT}
+            - web:${APACHE_DOCUMENT_ROOT}:cached
+            - web-docker-sync:${APACHE_DOCUMENT_ROOT}:nocopy
             # Attaches sample configs if necessary.
             - ${APACHE_TEMP_CONFIGS}
         labels:
@@ -74,7 +76,8 @@ services:
         container_name: "${PROJECT_NAME}-nginx"
         image: akhomy/alpine-nginx:${NGINX_TAG}
         volumes:
-            - web:${NGINX_SERVER_ROOT}
+            - web:${NGINX_SERVER_ROOT}:cached
+            - web-docker-sync:${NGINX_SERVER_ROOT}:nocopy
         # Attach sample configs if necessary.
             - ${NGINX_TEMP_CONFIGS}
         labels:
@@ -176,36 +179,14 @@ services:
                 aliases:
                 - ${NGROK_SHARED_NETWORK_ALIAS}
 
-    solr:
-        container_name: "${PROJECT_NAME}-solr"
-        image: solr:${SOLR_TAG}
-        labels:
-        - "traefik.docker.network=${PROJECT_NAME}"
-        - "traefik.enable=true"
-        - "traefik.port=${SOLR_TRAEFIK_PORT}"
-        - "traefik.protocol=${SOLR_TRAEFIK_PROTOCOL}"
-        - "traefik.frontend.rule=Host:${SOLR_TRAEFIK_HOST}"
-        volumes:
-            # Example of drupal solr core configuration. 6.x. Check image tag for correct config.
-            - solr:${SOLR_CORES_PATH}
-        entrypoint:
-            - docker-entrypoint.sh
-            - solr-precreate
-            - ${SOLR_ENTRYPOINT_ARGUMENT}
-        networks:
-            0_traefik: {}
-            1_internal: {}
-            2_shared:
-                aliases:
-                - ${SOLR_SHARED_NETWORK_ALIAS}
-
 ################ Database images.
     mysql:
         container_name: "${PROJECT_NAME}-mysql"
         image: mysql:${MYSQL_TAG}
-        # build: docker-web/images/mysql/.
+        # build: docker/images/mysql/.
         volumes:
-            - mysql:${MYSQL_LIB_PATH}
+            - mysql:${MYSQL_LIB_PATH}:cached
+            - mysql-docker-sync:${MYSQL_LIB_PATH}:nocopy
         environment:
             MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
             MYSQL_USER: ${MYSQL_USER}
@@ -215,33 +196,6 @@ services:
             1_internal:
                 aliases:
                 - ${MYSQL_INTERNAL_NETWORK_ALIAS}
-
-    postgres:
-        container_name: "${PROJECT_NAME}-postgres"
-        image: postgres:${POSTGRES_TAG}
-        restart: always
-        environment:
-            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-            POSTGRES_USER: ${POSTGRES_USER}
-            POSTGRES_DB: ${POSTGRES_DB}
-        volumes:
-            - postgres:${POSTGRES_LIB_PATH}
-        networks:
-            1_internal:
-                aliases:
-                - ${POSTGRES_INTERNAL_NETWORK_ALIAS}
-
-    mongo:
-        container_name: "${PROJECT_NAME}-mongo"
-        image: mongo:${MONGO_TAG}
-        volumes:
-            - mongo:${MONGO_LIB_PATH}
-        restart: always
-        command: ${MONGO_COMMAND}
-        networks:
-            1_internal:
-                aliases:
-                - ${MONGO_INTERNAL_NETWORK_ALIAS}
 
 ################ DB managers.
     phpmyadmin:
@@ -264,23 +218,6 @@ services:
                 aliases:
                 - ${PHPMYADMIN_SHARED_NETWORK_ALIAS}
 
-    adminer:
-        container_name: "${PROJECT_NAME}-adminer"
-        image: adminer:${ADMINER_TAG}
-        labels:
-        - "traefik.docker.network=${PROJECT_NAME}"
-        - "traefik.enable=true"
-        - "traefik.port=${ADMINER_TRAEFIK_PORT}"
-        - "traefik.protocol=${ADMINER_TRAEFIK_PROTOCOL}"
-        - "traefik.frontend.rule=Host:${ADMINER_TRAEFIK_HOST}"
-        restart: always
-        networks:
-            0_traefik: {}
-            1_internal: {}
-            2_shared:
-                aliases:
-                - ${ADMINER_SHARED_NETWORK_ALIAS}
-
 ################ Cache images.
     redis:
         container_name: "${PROJECT_NAME}-redis"
@@ -289,14 +226,6 @@ services:
             1_internal:
                 aliases:
                 - ${REDIS_INTERNAL_NETWORK_ALIAS}
-
-    memcached:
-        container_name: "${PROJECT_NAME}-memcached"
-        image: memcached:${MEMCACHED_TAG}
-        networks:
-            1_internal:
-                aliases:
-                - ${MEMCACHED_INTERNAL_NETWORK_ALIAS}
 
 networks:
   0_traefik:
@@ -316,27 +245,15 @@ volumes:
             type: none
             device: $PWD/webroot
             o: bind
-    solr:
-        driver: local
-        driver_opts:
-            type: none
-            device: $PWD/docker-web/runtime/solr
-            o: bind
     mysql:
         driver: local
         driver_opts:
             type: none
-            device: $PWD/docker-web/runtime/mysql
+            device: $PWD/docker/runtime/mysql
             o: bind
-    postgres:
-        driver: local
-        driver_opts:
-            type: none
-            device: $PWD/docker-web/runtime/postgres/data
-            o: bind
-    mongo:
-        driver: local
-        driver_opts:
-            type: none
-            device: $PWD/docker-web/runtime/mongo
-            o: bind
+    web-docker-sync:
+        name: "web-${PROJECT_NAME}-docker-sync"
+        external: true
+    mysql-docker-sync:
+        name: "mysql-${PROJECT_NAME}-docker-sync"
+        external: true

@@ -3,14 +3,14 @@ version: "3.5"
 services:
 ################ Web Stack.
     php-fpm:
+        container_name: "${PROJECT_NAME}-php-fpm"
         # Pls, check image tags, latest is php-7, but we have php-5 too.
-        # build: docker-web/images/php-fpm/.
+        # build: docker/images/php-fpm/.
         image: akhomy/alpine-php-fpm:${PHP_FPM_TAG}
         # image: akhomy/alpine-php-fpm:php-5
         # image: akhomy/alpine-php-fpm:php-7
         # image: akhomy/alpine-php-fpm:php-7.1
         # image: akhomy/alpine-php-fpm:php-7.0
-        container_name: "${PROJECT_NAME}-php-fpm"
         volumes:
             - ./crontasks.txt:/home/crontasks.txt
             - web:${PHP_FPM_ROOT}:cached
@@ -46,6 +46,7 @@ services:
                 - ${PHP_FPM_SHARED_NETWORK_ALIAS}
 
     apache-mpm:
+        container_name: "${PROJECT_NAME}-apache-fpm"
         image: akhomy/alpine-apache:${APACHE_TAG}
         volumes:
             - web:${APACHE_DOCUMENT_ROOT}:cached
@@ -57,7 +58,7 @@ services:
         - "traefik.enable=true"
         - "traefik.port=${APACHE_TRAEFIK_PORT}"
         - "traefik.protocol=${APACHE_TRAEFIK_PROTOCOL}"
-        - "traefik.frontend.rule=Host:${APACHE_MPM_SHARED_NETWORK_ALIAS}"
+        - "traefik.frontend.rule=Host:${APACHE_MPM_TRAEFIK_HOST}"
         environment:
             USE_ONLY_CONFIGS: ${APACHE_USE_ONLY_CONFIGS}
             APACHE_TIMEOUT: ${APACHE_TIMEOUT}
@@ -72,6 +73,7 @@ services:
                 - ${APACHE_MPM_SHARED_NETWORK_ALIAS}
 
     nginx:
+        container_name: "${PROJECT_NAME}-nginx"
         image: akhomy/alpine-nginx:${NGINX_TAG}
         volumes:
             - web:${NGINX_SERVER_ROOT}:cached
@@ -83,9 +85,8 @@ services:
         - "traefik.enable=true"
         - "traefik.port=${NGINX_TRAEFIK_PORT}"
         - "traefik.protocol=${NGINX_TRAEFIK_PROTOCOL}"
-        - "traefik.frontend.rule=Host:${NGINX_SHARED_NETWORK_ALIAS}"
+        - "traefik.frontend.rule=Host:${NGINX_TRAEFIK_HOST}"
         environment:
-            USE_ONLY_CONFIGS: ${NGINX_USE_ONLY_CONFIGS}
             KEEPALIVE_TIMEOUT: ${NGINX_KEEPALIVE_TIMEOUT}
             FASTCGI_READ_TIMEOUT: ${NGINX_FASTCGI_READ_TIMEOUT}
             LISTEN_PORT: ${NGINX_LISTEN_PORT}
@@ -111,11 +112,78 @@ services:
                 aliases:
                 - ${NGINX_SHARED_NETWORK_ALIAS}
 
+    varnish:
+        container_name: "${PROJECT_NAME}-varnish"
+        image: akhomy/alpine-varnish:${VARNISH_TAG}
+        labels:
+        - "traefik.docker.network=${PROJECT_NAME}"
+        - "traefik.enable=true"
+        - "traefik.port=${VARNISH_TRAEFIK_PORT}"
+        - "traefik.protocol=${VARNISH_TRAEFIK_PROTOCOL}"
+        - "traefik.frontend.rule=Host:${VARNISH_TRAEFIK_HOST}"
+        environment:
+            DEBUG: ${VARNISH_DEBUG}
+            VARNISH_BACKEND_HOST: ${VARNISH_BACKEND_HOST}
+            VARNISH_BACKEND_PORT: ${VARNISH_BACKEND_PORT}
+            VARNISH_CONFIG_PRESET: ${VARNISH_CONFIG_PRESET}
+            VARNISH_PURGE_KEY: ${VARNISH_PURGE_KEY}
+            VARNISH_SECRET: ${VARNISH_SECRET}
+            VARNISH_ALLOW_UNRESTRICTED_PURGE: ${VARNISH_ALLOW_UNRESTRICTED_PURGE}
+            VARNISH_BACKEND_BETWEEN_BYTES_TIMEOUT: ${VARNISH_BACKEND_BETWEEN_BYTES_TIMEOUT}
+            VARNISH_BACKEND_CONNECT_TIMEOUT: ${VARNISH_BACKEND_CONNECT_TIMEOUT}
+            VARNISH_BACKEND_FIRST_BYTE_TIMEOUT: ${VARNISH_BACKEND_FIRST_BYTE_TIMEOUT}
+            VARNISHD_PARAM_CONNECT_TIMEOUT: ${VARNISHD_PARAM_CONNECT_TIMEOUT}
+        expose:
+        - 6081
+        - 6082
+        - 9131
+        networks:
+            0_traefik: {}
+            1_internal: {}
+            2_shared:
+                aliases:
+                - ${VARNISH_SHARED_NETWORK_ALIAS}
+
+################ Toolkit images.
+    mailhog:
+        container_name: "${PROJECT_NAME}-mailhog"
+        image: mailhog/mailhog:${MAILHOG_TAG}
+        labels:
+        - "traefik.docker.network=${PROJECT_NAME}"
+        - "traefik.enable=true"
+        - "traefik.port=${MAILHOG_TRAEFIK_PORT}"
+        - "traefik.protocol=${MAILHOG_TRAEFIK_PROTOCOL}"
+        - "traefik.frontend.rule=Host:${MAILHOG_TRAEFIK_HOST}"
+        networks:
+            0_traefik: {}
+            1_internal: {}
+            2_shared:
+                aliases:
+                - ${MAILHOG_SHARED_NETWORK_ALIAS}
+
+    ngrok:
+        container_name: "${PROJECT_NAME}-ngrok"
+        image: akhomy/alpine-ngrok:${NGROK_TAG}
+        labels:
+        - "traefik.docker.network=${PROJECT_NAME}"
+        - "traefik.enable=true"
+        - "traefik.port=${NGROK_TRAEFIK_PORT}"
+        - "traefik.protocol=${NGROK_TRAEFIK_PROTOCOL}"
+        - "traefik.frontend.rule=Host:${NGROK_TRAEFIK_HOST}"
+        environment:
+            ARGS: ${NGROK_ARGS}
+        networks:
+            0_traefik: {}
+            1_internal: {}
+            2_shared:
+                aliases:
+                - ${NGROK_SHARED_NETWORK_ALIAS}
 
 ################ Database images.
     mysql:
+        container_name: "${PROJECT_NAME}-mysql"
         image: mysql:${MYSQL_TAG}
-        # build: docker-web/images/mysql/.
+        # build: docker/images/mysql/.
         volumes:
             - mysql:${MYSQL_LIB_PATH}:cached
             - mysql-docker-sync:${MYSQL_LIB_PATH}:nocopy
@@ -125,44 +193,45 @@ services:
             MYSQL_PASSWORD: ${MYSQL_PASSWORD}
             MYSQL_DATABASE: ${MYSQL_DATABASE}
         networks:
-            internal:
+            1_internal:
                 aliases:
                 - ${MYSQL_INTERNAL_NETWORK_ALIAS}
 
-################ Selenium image configuration and php-fpm-data as proxy container for selenium.
-    php-fpm-data:
-        image: akhomy/alpine-php-fpm:${PHP_FPM_DATA_TAG}
-        networks:
-            internal:
-                aliases:
-                - ${PHP_FPM_DATA_INTERNAL_NETWORK_ALIAS}
-
-    selenium:
-        image: selenium/standalone-firefox-debug:${SELENIUM_TAG}
+################ DB managers.
+    phpmyadmin:
+        container_name: "${PROJECT_NAME}-phpmyadmin"
+        image: phpmyadmin/phpmyadmin:${PHPMYADMIN_TAG}
         labels:
         - "traefik.docker.network=${PROJECT_NAME}"
         - "traefik.enable=true"
-        - "traefik.port=${SELENIUM_TRAEFIK_PORT}"
-        - "traefik.protocol=${SELENIUM_TRAEFIK_PROTOCOL}"
-        - "traefik.frontend.rule=Host:${SELENIUM_SHARED_NETWORK_ALIAS}"
-        ports:
-            - "4444"
-            - "5900"
-        cap_add:
-            - NET_ADMIN
-            - NET_RAW
+        - "traefik.port=${PHPMYADMIN_TRAEFIK_PORT}"
+        - "traefik.protocol=${PHPMYADMIN_TRAEFIK_PROTOCOL}"
+        - "traefik.frontend.rule=Host:${PHPMYADMIN_TRAEFIK_HOST}"
+        environment:
+            PMA_HOST: ${PMA_HOST}
+            PHP_UPLOAD_MAX_FILESIZE: ${PHP_UPLOAD_MAX_FILESIZE}
+            PHP_MAX_INPUT_VARS: ${PHP_MAX_INPUT_VARS}
         networks:
-                0_traefik: {}
-                1_internal: {}
-                2_shared:
-                    aliases:
-                    - ${SELENIUM_TAG_SHARED_NETWORK_ALIAS}
+            0_traefik: {}
+            1_internal: {}
+            2_shared:
+                aliases:
+                - ${PHPMYADMIN_SHARED_NETWORK_ALIAS}
+
+################ Cache images.
+    redis:
+        container_name: "${PROJECT_NAME}-redis"
+        image: redis:${REDIS_TAG}
+        networks:
+            1_internal:
+                aliases:
+                - ${REDIS_INTERNAL_NETWORK_ALIAS}
 
 networks:
   0_traefik:
     external:
         name: ${TRAEFIK_NETWORK}
-  internal:
+  1_internal:
     driver_opts:
       1_internal: "true"
     driver: bridge
@@ -180,7 +249,7 @@ volumes:
         driver: local
         driver_opts:
             type: none
-            device: $PWD/docker-web/runtime/mysql
+            device: $PWD/docker/runtime/mysql
             o: bind
     web-docker-sync:
         name: "web-${PROJECT_NAME}-docker-sync"

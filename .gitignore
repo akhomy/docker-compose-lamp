@@ -4,8 +4,7 @@
 /**/runtime/mysql/*
 /**/runtime/postgres/data/*
 /**/runtime/mongo/*
-/**/runtime/solr_drupal_6_x/docker-weblamp_drupal_core/data/*/
-/**/runtime/solr_drupal_6_x/docker-weblamp_drupal_core/data/*.*
+/**/runtime/solr_drupal_6_x/data/*/
 /nbproject
 /.vscode
 /.history

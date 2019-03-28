@@ -4,7 +4,7 @@ services:
 ################ Web Stack.
     php-fpm:
         # Pls, check image tags, latest is php-7, but we have php-5 too.
-        # build: docker-web/images/php-fpm/.
+        # build: docker/images/php-fpm/.
         image: akhomy/alpine-php-fpm:${PHP_FPM_TAG}
         # image: akhomy/alpine-php-fpm:php-5
         # image: akhomy/alpine-php-fpm:php-7
@@ -114,7 +114,7 @@ services:
 ################ Database images.
     mysql:
         image: mysql:${MYSQL_TAG}
-        # build: docker-web/images/mysql/.
+        # build: docker/images/mysql/.
         volumes:
             - mysql:${MYSQL_LIB_PATH}:cached
             - mysql-docker-sync:${MYSQL_LIB_PATH}:nocopy
@@ -130,7 +130,7 @@ services:
 
 ################ Profiling images.
     php-fpm-xhprof:
-        build: docker-web/images/php-fpm/.
+        build: docker/images/php-fpm/.
         volumes:
             - xhprof:${XHPROF_ROOT}:cached
             - xhprof-docker-sync:${XHPROF_ROOT}:nocopy
@@ -182,13 +182,13 @@ volumes:
         driver: local
         driver_opts:
             type: none
-            device: $PWD/docker-web/tools/php/xhprof
+            device: $PWD/docker/tools/php/xhprof
             o: bind
     mysql:
         driver: local
         driver_opts:
             type: none
-            device: $PWD/docker-web/runtime/mysql
+            device: $PWD/docker/runtime/mysql
             o: bind
     web-docker-sync:
         name: "web-${PROJECT_NAME}-docker-sync"
