@@ -46,11 +46,11 @@ services:
                 - ${PHP_FPM_SHARED_NETWORK_ALIAS}
 
     apache-mpm:
-        container_name: "${PROJECT_NAME}-apache-fpm"
+        container_name: "${PROJECT_NAME}-apache-mpm"
         image: akhomy/alpine-apache:${APACHE_TAG}
         volumes:
-            - web:${APACHE_DOCUMENT_ROOT}:cached
-            - web-docker-sync:${APACHE_DOCUMENT_ROOT}:nocopy
+            - web:${PHP_FPM_ROOT}:cached
+            - web-docker-sync:${PHP_FPM_ROOT}:nocopy
             # Attaches sample configs if necessary.
             - ${APACHE_TEMP_CONFIGS}
         labels:
@@ -76,8 +76,8 @@ services:
         container_name: "${PROJECT_NAME}-nginx"
         image: akhomy/alpine-nginx:${NGINX_TAG}
         volumes:
-            - web:${NGINX_SERVER_ROOT}:cached
-            - web-docker-sync:${NGINX_SERVER_ROOT}:nocopy
+            - web:${PHP_FPM_ROOT}:cached
+            - web-docker-sync:${PHP_FPM_ROOT}:nocopy
         # Attach sample configs if necessary.
             - ${NGINX_TEMP_CONFIGS}
         labels:
