@@ -1,0 +1,33 @@
+version: "3.5"
+
+services:
+
+    traefik:
+        image: traefik:${TRAEFIK_TAG}
+        container_name: "${TRAEFIK_NETWORK}-traefik"
+        volumes:
+        - ./traefik.toml:/etc/traefik/traefik.toml
+        - /var/run/docker.sock:/var/run/docker.sock
+        # see https://github.com/containous/traefik/issues/7
+        command:
+            - "--api"
+            - "--docker"
+            - "--docker.domain=${TRAEFIK_DOCKER_DOMAIN}"
+            - "--docker.watch"
+        labels:
+            - "traefik.docker.network=${TRAEFIK_NETWORK}"
+            - "traefik.enable=true"
+            - "traefik.frontend.rule=Host:traefik.${TRAEFIK_DOCKER_DOMAIN}"
+        networks:
+            0_traefik:
+                aliases:
+                - traefik.${TRAEFIK_DOCKER_DOMAIN}
+        ports:
+        - '80:80'
+        - '8080:8080'
+        - '443:443'
+
+networks:
+    0_traefik:
+        driver: bridge
+        name: "${TRAEFIK_NETWORK}"
