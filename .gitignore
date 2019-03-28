@@ -5,3 +5,4 @@
 /docker/runtime/solr_drupal_6_x/dockerlamp_drupal_core/data/*.*
 /nbproject
 /.vscode
+docker-compose-lamp.code-workspace

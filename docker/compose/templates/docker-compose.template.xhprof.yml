@@ -1,0 +1,201 @@
+version: "3.5"
+
+services:
+################ Web Stack.
+    php-fpm:
+        # Pls, check image tags, latest is php-7, but we have php-5 too.
+        # build: docker/images/php-fpm/.
+        image: akhomy/alpine-php-fpm:${PHP_FPM_TAG}
+        # image: akhomy/alpine-php-fpm:php-5
+        # image: akhomy/alpine-php-fpm:php-7
+        # image: akhomy/alpine-php-fpm:php-7.1
+        # image: akhomy/alpine-php-fpm:php-7.0
+        container_name: "${PROJECT_NAME}-php-fpm"
+        volumes:
+            - ./crontasks.txt:/home/crontasks.txt
+            - web:${PHP_FPM_ROOT}:cached
+            - web-docker-sync:${PHP_FPM_ROOT}:nocopy
+            # Attaches sample configs if necessary.
+            - ${PHP_TEMP_CONFIGS}
+        environment:
+            USE_ONLY_CONFIGS: ${PHP_USE_ONLY_CONFIGS}
+            LINES: ${PHP_LINES}
+            COLUMNS: ${PHP_COLUMNS}
+            PHP_OPCACHE_ENABLE: ${PHP_OPCACHE_ENABLE}
+            DRUSH_VERSION: ${PHP_DRUSH_VERSION}
+            PHP_SHOW_ERRORS: ${PHP_SHOW_ERRORS}
+            CRONTAB_ENABLED: ${PHP_CRONTAB_ENABLED}
+            PHP_FPM_PORT: ${PHP_FPM_PORT}
+            PHP_SENDMAIL_PATH: ${PHP_SENDMAIL_PATH}
+            PHP_SENDMAIL_HOST: ${PHP_SENDMAIL_HOST}
+            PHP_SENDMAIL_PORT: ${PHP_SENDMAIL_PORT}
+            PHP_XDEBUG_ENABLED: ${PHP_XDEBUG_ENABLED}
+            PHP_XDEBUG_PORT: ${PHP_XDEBUG_PORT}
+            PHP_MAX_EXECUTION_TIME: ${PHP_MAX_EXECUTION_TIME}
+            PHP_UPLOAD_MAX_FILESIZE: ${PHP_UPLOAD_MAX_FILESIZE}
+            PHP_POST_MAX_SIZE: ${PHP_POST_MAX_SIZE}
+            PHP_ALLOW_URL_FOPEN: ${PHP_ALLOW_URL_FOPEN}
+            PHP_ALWAYS_POPULATE_RAW_POST_DATA: ${PHP_ALWAYS_POPULATE_RAW_POST_DATA}
+            PHP_SHORT_OPEN_TAG: ${PHP_SHORT_OPEN_TAG}
+            PHP_MEMORY_LIMIT: ${PHP_MEMORY_LIMIT}
+        networks:
+            0_traefik: {}
+            1_internal: {}
+            2_shared:
+                aliases:
+                - ${PHP_FPM_SHARED_NETWORK_ALIAS}
+
+    apache-mpm:
+        image: akhomy/alpine-apache:${APACHE_TAG}
+        volumes:
+            - web:${APACHE_DOCUMENT_ROOT}:cached
+            - web-docker-sync:${APACHE_DOCUMENT_ROOT}:nocopy
+            # Attaches sample configs if necessary.
+            - ${APACHE_TEMP_CONFIGS}
+        labels:
+        - "traefik.docker.network=${PROJECT_NAME}"
+        - "traefik.enable=true"
+        - "traefik.port=${APACHE_TRAEFIK_PORT}"
+        - "traefik.protocol=${APACHE_TRAEFIK_PROTOCOL}"
+        - "traefik.frontend.rule=Host:${APACHE_MPM_SHARED_NETWORK_ALIAS}"
+        environment:
+            USE_ONLY_CONFIGS: ${APACHE_USE_ONLY_CONFIGS}
+            APACHE_TIMEOUT: ${APACHE_TIMEOUT}
+            DOCUMENT_ROOT: ${APACHE_DOCUMENT_ROOT}
+            PROXY_PASS: ${APACHE_PROXY_PASS}
+            APACHE_LISTEN_PORT: ${APACHE_LISTEN_PORT}
+        networks:
+            0_traefik: {}
+            1_internal: {}
+            2_shared:
+                aliases:
+                - ${APACHE_MPM_SHARED_NETWORK_ALIAS}
+
+    nginx:
+        image: akhomy/alpine-nginx:${NGINX_TAG}
+        volumes:
+            - web:${NGINX_SERVER_ROOT}:cached
+            - web-docker-sync:${NGINX_SERVER_ROOT}:nocopy
+        # Attach sample configs if necessary.
+            - ${NGINX_TEMP_CONFIGS}
+        labels:
+        - "traefik.docker.network=${PROJECT_NAME}"
+        - "traefik.enable=true"
+        - "traefik.port=${NGINX_TRAEFIK_PORT}"
+        - "traefik.protocol=${NGINX_TRAEFIK_PROTOCOL}"
+        - "traefik.frontend.rule=Host:${NGINX_SHARED_NETWORK_ALIAS}"
+        environment:
+            USE_ONLY_CONFIGS: ${NGINX_USE_ONLY_CONFIGS}
+            KEEPALIVE_TIMEOUT: ${NGINX_KEEPALIVE_TIMEOUT}
+            FASTCGI_READ_TIMEOUT: ${NGINX_FASTCGI_READ_TIMEOUT}
+            LISTEN_PORT: ${NGINX_LISTEN_PORT}
+            LISTEN_SSL_PORT: ${NGINX_LISTEN_SSL_PORT}
+            SERVER_ROOT: ${NGINX_SERVER_ROOT}
+            SERVER_NAME: ${NGINX_SERVER_NAME}
+            CLIENT_MAX_BODY_SIZE: ${NGINX_CLIENT_MAX_BODY_SIZE}
+            PROXY_CONNECT_TIMEOUT: ${NGINX_PROXY_CONNECT_TIMEOUT}
+            PROXY_SEND_TIMEOUT: ${NGINX_PROXY_SEND_TIMEOUT}
+            PROXY_READ_TIMEOUT: ${NGINX_PROXY_READ_TIMEOUT}
+            SEND_TIMEOUT: ${NGINX_SEND_TIMEOUT}
+            FASTCGI_BUFFERS: ${NGINX_FASTCGI_BUFFERS}
+            FASTCGI_BUFFER_SIZE: ${NGINX_FASTCGI_BUFFER_SIZE}
+            PROXY_BUFFER_SIZE: ${NGINX_PROXY_BUFFER_SIZE}
+            PROXY_BUFFERS: ${NGINX_PROXY_BUFFERS}
+            PROXY_BUSY_BUFFER_SIZE: ${NGINX_PROXY_BUSY_BUFFER_SIZE}
+            OPENSSL_ARGS: ${NGINX_OPENSSL_ARGS}
+            PROXY_PASS: ${NGINX_PROXY_PASS}
+        networks:
+            0_traefik: {}
+            1_internal: {}
+            2_shared:
+                aliases:
+                - ${NGINX_SHARED_NETWORK_ALIAS}
+
+################ Database images.
+    mysql:
+        image: mysql:${MYSQL_TAG}
+        # build: docker/images/mysql/.
+        volumes:
+            - mysql:${MYSQL_LIB_PATH}:cached
+            - mysql-docker-sync:${MYSQL_LIB_PATH}:nocopy
+        environment:
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+        networks:
+            1_internal:
+                aliases:
+                - ${MYSQL_INTERNAL_NETWORK_ALIAS}
+
+################ Profiling images.
+    php-fpm-xhprof:
+        build: docker/images/php-fpm/.
+        volumes:
+            - xhprof:${XHPROF_ROOT}:cached
+            - xhprof-docker-sync:${XHPROF_ROOT}:nocopy
+        networks:
+            0_traefik: {}
+            1_internal:
+                aliases:
+                - ${XHPROF_INTERNAL_NETWORK_ALIAS}
+            2_shared:
+                aliases:
+                - ${XHPROF_SHARED_NETWORK_ALIAS}
+
+    apache-mpm-xhprof:
+        image: akhomy/alpine-apache
+        volumes:
+            - xhprof:${XHPROF_ROOT}:cached
+            - xhprof-docker-sync:${XHPROF_ROOT}:nocopy
+        environment:
+            APACHE_TIMEOUT: 300
+            DOCUMENT_ROOT: ${XHPROF_ROOT}/xhprof_html
+            PROXY_PASS: fcgi://${XHPROF_INTERNAL_NETWORK_ALIAS}:7000${XHPROF_ROOT}/xhprof_html
+            APACHE_LISTEN_PORT: 80
+        networks:
+            0_traefik: {}
+            1_internal: {}
+            2_shared:
+                aliases:
+                - ${APACHE_XHPROF_SHARED_NETWORK_ALIAS}
+
+networks:
+    0_traefik:
+        external:
+            name: ${PROJECT_NAME}
+    1_internal:
+        driver_opts:
+        1_internal: "true"
+        driver: bridge
+    2_shared:
+        driver: bridge
+
+volumes:
+    web:
+        driver: local
+        driver_opts:
+            type: none
+            device: $PWD/../webroot
+            o: bind
+    xhprof:
+        driver: local
+        driver_opts:
+            type: none
+            device: $PWD/tools/php/xhprof
+            o: bind
+    mysql:
+        driver: local
+        driver_opts:
+            type: none
+            device: $PWD/runtime/mysql
+            o: bind
+    web-docker-sync:
+        name: "web-${PROJECT_NAME}-docker-sync"
+        external: true
+    xhprof-docker-sync:
+        name: "xhprof-${PROJECT_NAME}-docker-sync"
+        external: true
+    mysql-docker-sync:
+        name: "mysql-${PROJECT_NAME}-docker-sync"
+        external: true

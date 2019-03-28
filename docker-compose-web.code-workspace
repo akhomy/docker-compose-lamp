@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "/var/www/html/docker_images"
+		},
+		{
+			"path": "/var/www/html/vivirconepilepsiaes"
+		}
+	],
+	"settings": {
+		"git.ignoreLimitWarning": true
+	}
+}

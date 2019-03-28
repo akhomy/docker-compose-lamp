@@ -1,0 +1,21 @@
+defaultEntryPoints = ["https", "http"]
+maxIdleConnsPerHost = 100000
+# Removes cert verification of traefik cert and https container cert.
+insecureSkipVerify = true
+[entryPoints]
+  [entryPoints.https]
+  address = ":443"
+    [entryPoints.https.tls]
+  [entryPoints.http]
+  address = ":80"
+################################################################
+# API and dashboard configuration
+################################################################
+[api]
+################################################################
+# Docker configuration backend
+################################################################
+[docker]
+domain = "docker.localhost"
+watch = false
+exposedByDefault = false

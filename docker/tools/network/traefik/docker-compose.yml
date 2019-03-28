@@ -1,0 +1,31 @@
+version: "3.5"
+
+services:
+
+    traefik:
+        image: traefik:${TRAEFIK_TAG}
+        container_name: "${PROJECT_NAME}-traefik"
+        volumes:
+        - ./traefik.toml:/etc/traefik/traefik.toml
+        - /var/run/docker.sock:/var/run/docker.sock
+        # see https://github.com/containous/traefik/issues/7
+        command: --api --docker --web --logLevel=DEBUG
+        labels:
+            - "traefik.docker.network=${PROJECT_NAME}"
+            - "traefik.enable=true"
+            - "traefik.protocol=https"
+            - "traefik.port=443"
+            - "traefik.frontend.rule=Host:traefik.${TRAEFIK_DOCKER_DOMAIN}"
+        networks:
+            0_traefik:
+                aliases:
+                - traefik.${TRAEFIK_DOCKER_DOMAIN}
+        ports:
+        - '80:80'
+        - '8080:8080'
+        - '443:443'
+
+networks:
+    0_traefik:
+        driver: bridge
+        name: "${PROJECT_NAME}"
