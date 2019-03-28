@@ -1,4 +1,5 @@
 /.docker-sync
+/**/projects/
 /**/.docker-sync
 /**/runtime/mysql/*
 /**/runtime/postgres/data/*
