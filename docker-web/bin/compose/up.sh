@@ -10,6 +10,6 @@ project="${project##*/}";
 
 echo "UP $project";
 
-docker-compose -p "$project" -f compose/docker-compose.app.yml up -d --remove-orphans;
-docker-compose -p "$project" -f tools/network/traefik/docker-compose.yml up -d;
 
+docker-compose -p "$project" -f tools/network/traefik/docker-compose.yml up -d;
+docker-compose -p "$project" -f compose/docker-compose.app.yml up -d;
