@@ -111,6 +111,7 @@ services:
                 aliases:
                 - ${NGINX_SHARED_NETWORK_ALIAS}
 
+
 ################ Database images.
     mysql:
         image: mysql:${MYSQL_TAG}
@@ -124,52 +125,49 @@ services:
             MYSQL_PASSWORD: ${MYSQL_PASSWORD}
             MYSQL_DATABASE: ${MYSQL_DATABASE}
         networks:
-            1_internal:
+            internal:
                 aliases:
                 - ${MYSQL_INTERNAL_NETWORK_ALIAS}
 
-################ Profiling images.
-    php-fpm-xhprof:
-        build: docker/images/php-fpm/.
-        volumes:
-            - xhprof:${XHPROF_ROOT}:cached
-            - xhprof-docker-sync:${XHPROF_ROOT}:nocopy
+################ Selenium image configuration and php-fpm-data as proxy container for selenium.
+    php-fpm-data:
+        image: akhomy/alpine-php-fpm:${PHP_FPM_DATA_TAG}
         networks:
-            0_traefik: {}
-            1_internal:
+            internal:
                 aliases:
-                - ${XHPROF_INTERNAL_NETWORK_ALIAS}
-            2_shared:
-                aliases:
-                - ${XHPROF_SHARED_NETWORK_ALIAS}
+                - ${PHP_FPM_DATA_INTERNAL_NETWORK_ALIAS}
 
-    apache-mpm-xhprof:
-        image: akhomy/alpine-apache
-        volumes:
-            - xhprof:${XHPROF_ROOT}:cached
-            - xhprof-docker-sync:${XHPROF_ROOT}:nocopy
-        environment:
-            APACHE_TIMEOUT: 300
-            DOCUMENT_ROOT: ${XHPROF_ROOT}/xhprof_html
-            PROXY_PASS: fcgi://${XHPROF_INTERNAL_NETWORK_ALIAS}:7000${XHPROF_ROOT}/xhprof_html
-            APACHE_LISTEN_PORT: 80
+    selenium:
+        image: selenium/standalone-firefox-debug:${SELENIUM_TAG}
+        labels:
+        - "traefik.docker.network=${PROJECT_NAME}"
+        - "traefik.enable=true"
+        - "traefik.port=${SELENIUM_TRAEFIK_PORT}"
+        - "traefik.protocol=${SELENIUM_TRAEFIK_PROTOCOL}"
+        - "traefik.frontend.rule=Host:${SELENIUM_SHARED_NETWORK_ALIAS}"
+        ports:
+            - "4444"
+            - "5900"
+        cap_add:
+            - NET_ADMIN
+            - NET_RAW
         networks:
-            0_traefik: {}
-            1_internal: {}
-            2_shared:
-                aliases:
-                - ${APACHE_XHPROF_SHARED_NETWORK_ALIAS}
+                0_traefik: {}
+                1_internal: {}
+                2_shared:
+                    aliases:
+                    - ${SELENIUM_TAG_SHARED_NETWORK_ALIAS}
 
 networks:
-    0_traefik:
-        external:
-            name: ${PROJECT_NAME}
-    1_internal:
-        driver_opts:
-        1_internal: "true"
-        driver: bridge
-    2_shared:
-        driver: bridge
+  0_traefik:
+    external:
+        name: ${PROJECT_NAME}
+  internal:
+    driver_opts:
+      1_internal: "true"
+    driver: bridge
+  2_shared:
+    driver: bridge
 
 volumes:
     web:
@@ -178,23 +176,14 @@ volumes:
             type: none
             device: $PWD/../webroot
             o: bind
-    xhprof:
-        driver: local
-        driver_opts:
-            type: none
-            device: $PWD/tools/php/xhprof
-            o: bind
     mysql:
         driver: local
         driver_opts:
             type: none
-            device: $PWD/runtime/mysql
+            device: $PWD/../docker-web/runtime/mysql
             o: bind
     web-docker-sync:
         name: "web-${PROJECT_NAME}-docker-sync"
-        external: true
-    xhprof-docker-sync:
-        name: "xhprof-${PROJECT_NAME}-docker-sync"
         external: true
     mysql-docker-sync:
         name: "mysql-${PROJECT_NAME}-docker-sync"

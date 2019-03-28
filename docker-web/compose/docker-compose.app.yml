@@ -12,7 +12,7 @@ services:
         # image: akhomy/alpine-php-fpm:php-7.1
         # image: akhomy/alpine-php-fpm:php-7.0
         volumes:
-            - ./docker/compose/crontasks.txt:/home/crontasks.txt
+            - ./crontasks.txt:/home/crontasks.txt
             - web:${PHP_FPM_ROOT}:cached
             - web-docker-sync:${PHP_FPM_ROOT}:nocopy
             # Attaches sample configs if necessary.
@@ -321,31 +321,31 @@ volumes:
         driver: local
         driver_opts:
             type: none
-            device: $PWD/webroot
+            device: $PWD/../webroot
             o: bind
     solr:
         driver: local
         driver_opts:
             type: none
-            device: $PWD/docker/runtime/solr
+            device: $PWD/../docker-web/runtime/solr
             o: bind
     mysql:
         driver: local
         driver_opts:
             type: none
-            device: $PWD/docker/runtime/mysql
+            device: $PWD/../docker-web/runtime/mysql
             o: bind
     postgres:
         driver: local
         driver_opts:
             type: none
-            device: $PWD/docker/runtime/postgres/data
+            device: $PWD/../docker-web/runtime/postgres/data
             o: bind
     mongo:
         driver: local
         driver_opts:
             type: none
-            device: $PWD/docker/runtime/mongo
+            device: $PWD/../docker-web/runtime/mongo
             o: bind
     web-docker-sync:
         name: "web-${PROJECT_NAME}-docker-sync"

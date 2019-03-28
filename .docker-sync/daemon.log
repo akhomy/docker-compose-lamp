@@ -1,7 +1,0 @@
-     success  Docker volume for web-docker-compose-web-docker-sync created
-     success  Docker volume for node-docker-compose-web-docker-sync created
-     success  Docker volume for solr-docker-compose-web-docker-sync created
-     success  Docker volume for xhprof-docker-compose-web-docker-sync created
-     success  Docker volume for mysql-docker-compose-web-docker-sync created
-     success  Docker volume for postgres-docker-compose-web-docker-sync created
-     success  Docker volume for mongo-docker-compose-web-docker-sync created
