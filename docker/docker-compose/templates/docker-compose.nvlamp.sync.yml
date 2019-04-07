@@ -123,6 +123,7 @@ services:
         - "traefik.frontend.rule=Host:${VARNISH_TRAEFIK_HOST}"
         environment:
             DEBUG: ${VARNISH_DEBUG}
+            VARNISH_BLOCKED_URLS: ${VARNISH_BLOCKED_URLS}
             VARNISH_BACKEND_HOST: ${VARNISH_BACKEND_HOST}
             VARNISH_BACKEND_PORT: ${VARNISH_BACKEND_PORT}
             VARNISH_CONFIG_PRESET: ${VARNISH_CONFIG_PRESET}
