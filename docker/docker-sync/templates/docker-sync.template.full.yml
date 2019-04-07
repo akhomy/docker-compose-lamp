@@ -2,12 +2,12 @@ version: "2"
 
 syncs:
   web-${PROJECT_NAME}-docker-sync:
-    src: 'webroot'
+    src: ${PROJECT_MOUNT}
     sync_userid: '1000'
     sync_excludes: ['.gitignore', '.git/', '.idea/']
     host_disk_mount_mode: 'cached'
   node-${PROJECT_NAME}-docker-sync:
-    src: 'webroot'
+    src: ${PROJECT_MOUNT}
     sync_userid: '1000'
     sync_excludes: ['.gitignore', '.git/', '.idea/']
     host_disk_mount_mode: 'cached'

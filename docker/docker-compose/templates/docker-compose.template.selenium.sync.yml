@@ -174,7 +174,7 @@ volumes:
         driver: local
         driver_opts:
             type: none
-            device: $PWD/webroot
+            device: $PWD/${PROJECT_MOUNT}
             o: bind
     mysql:
         driver: local
