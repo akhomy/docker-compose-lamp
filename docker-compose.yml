@@ -12,6 +12,7 @@ services:
         # image: akhomy/alpine-php-fpm:php-7.1
         # image: akhomy/alpine-php-fpm:php-7.0
         volumes:
+            - ./.ssh:/home/www-data/.ssh
             - ./crontasks.txt:/home/crontasks.txt
             - web:${PHP_FPM_ROOT}:cached
             - web-docker-sync:${PHP_FPM_ROOT}:nocopy
