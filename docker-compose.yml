@@ -135,10 +135,6 @@ services:
             VARNISH_BACKEND_CONNECT_TIMEOUT: ${VARNISH_BACKEND_CONNECT_TIMEOUT}
             VARNISH_BACKEND_FIRST_BYTE_TIMEOUT: ${VARNISH_BACKEND_FIRST_BYTE_TIMEOUT}
             VARNISHD_PARAM_CONNECT_TIMEOUT: ${VARNISHD_PARAM_CONNECT_TIMEOUT}
-        expose:
-        - 6081
-        - 6082
-        - 9131
         networks:
             0_proxy: {}
             1_internal: {}
