@@ -39,7 +39,7 @@ services:
             PHP_SHORT_OPEN_TAG: ${PHP_SHORT_OPEN_TAG}
             PHP_MEMORY_LIMIT: ${PHP_MEMORY_LIMIT}
         networks:
-            0_traefik: {}
+            0_proxy: {}
             1_internal: {}
             2_shared:
                 aliases:
@@ -65,7 +65,7 @@ services:
             PROXY_PASS: ${APACHE_PROXY_PASS}
             APACHE_LISTEN_PORT: ${APACHE_LISTEN_PORT}
         networks:
-            0_traefik: {}
+            0_proxy: {}
             1_internal: {}
             2_shared:
                 aliases:
@@ -104,7 +104,7 @@ services:
             OPENSSL_ARGS: ${NGINX_OPENSSL_ARGS}
             PROXY_PASS: ${NGINX_PROXY_PASS}
         networks:
-            0_traefik: {}
+            0_proxy: {}
             1_internal: {}
             2_shared:
                 aliases:
@@ -137,7 +137,7 @@ services:
         - 6082
         - 9131
         networks:
-            0_traefik: {}
+            0_proxy: {}
             1_internal: {}
             2_shared:
                 aliases:
@@ -154,7 +154,7 @@ services:
         - "traefik.protocol=${MAILHOG_TRAEFIK_PROTOCOL}"
         - "traefik.frontend.rule=Host:${MAILHOG_TRAEFIK_HOST}"
         networks:
-            0_traefik: {}
+            0_proxy: {}
             1_internal: {}
             2_shared:
                 aliases:
@@ -172,7 +172,7 @@ services:
         environment:
             ARGS: ${NGROK_ARGS}
         networks:
-            0_traefik: {}
+            0_proxy: {}
             1_internal: {}
             2_shared:
                 aliases:
@@ -195,7 +195,7 @@ services:
             - solr-precreate
             - ${SOLR_ENTRYPOINT_ARGUMENT}
         networks:
-            0_traefik: {}
+            0_proxy: {}
             1_internal: {}
             2_shared:
                 aliases:
@@ -260,7 +260,7 @@ services:
             PHP_UPLOAD_MAX_FILESIZE: ${PHP_UPLOAD_MAX_FILESIZE}
             PHP_MAX_INPUT_VARS: ${PHP_MAX_INPUT_VARS}
         networks:
-            0_traefik: {}
+            0_proxy: {}
             1_internal: {}
             2_shared:
                 aliases:
@@ -277,7 +277,7 @@ services:
         - "traefik.frontend.rule=Host:${ADMINER_TRAEFIK_HOST}"
         restart: always
         networks:
-            0_traefik: {}
+            0_proxy: {}
             1_internal: {}
             2_shared:
                 aliases:
@@ -301,9 +301,9 @@ services:
                 - ${MEMCACHED_INTERNAL_NETWORK_ALIAS}
 
 networks:
-  0_traefik:
+  0_proxy:
     external:
-        name: ${TRAEFIK_NETWORK}
+        name: ${PROXY_NETWORK}
   1_internal:
     driver_opts:
       1_internal: "true"

@@ -39,7 +39,7 @@ services:
             PHP_SHORT_OPEN_TAG: ${PHP_SHORT_OPEN_TAG}
             PHP_MEMORY_LIMIT: ${PHP_MEMORY_LIMIT}
         networks:
-            0_traefik: {}
+            0_proxy: {}
             1_internal: {}
             2_shared:
                 aliases:
@@ -65,7 +65,7 @@ services:
             PROXY_PASS: ${APACHE_PROXY_PASS}
             APACHE_LISTEN_PORT: ${APACHE_LISTEN_PORT}
         networks:
-            0_traefik: {}
+            0_proxy: {}
             1_internal: {}
             2_shared:
                 aliases:
@@ -105,7 +105,7 @@ services:
             OPENSSL_ARGS: ${NGINX_OPENSSL_ARGS}
             PROXY_PASS: ${NGINX_PROXY_PASS}
         networks:
-            0_traefik: {}
+            0_proxy: {}
             1_internal: {}
             2_shared:
                 aliases:
@@ -152,16 +152,16 @@ services:
             - NET_ADMIN
             - NET_RAW
         networks:
-                0_traefik: {}
+                0_proxy: {}
                 1_internal: {}
                 2_shared:
                     aliases:
                     - ${SELENIUM_TAG_SHARED_NETWORK_ALIAS}
 
 networks:
-  0_traefik:
+  0_proxy:
     external:
-        name: ${TRAEFIK_NETWORK}
+        name: ${PROXY_NETWORK}
   internal:
     driver_opts:
       1_internal: "true"
