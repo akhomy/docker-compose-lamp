@@ -53,7 +53,7 @@ services:
             # Attaches sample configs if necessary.
             - ${APACHE_TEMP_CONFIGS}
         labels:
-        - "traefik.docker.network=${PROJECT_NAME}"
+        - "traefik.docker.network=${PROXY_NETWORK}"
         - "traefik.enable=true"
         - "traefik.port=${APACHE_TRAEFIK_PORT}"
         - "traefik.protocol=${APACHE_TRAEFIK_PROTOCOL}"
@@ -79,7 +79,7 @@ services:
         # Attach sample configs if necessary.
             - ${NGINX_TEMP_CONFIGS}
         labels:
-        - "traefik.docker.network=${PROJECT_NAME}"
+        - "traefik.docker.network=${PROXY_NETWORK}"
         - "traefik.enable=true"
         - "traefik.port=${NGINX_TRAEFIK_PORT}"
         - "traefik.protocol=${NGINX_TRAEFIK_PROTOCOL}"
@@ -140,7 +140,7 @@ services:
     selenium:
         image: selenium/standalone-firefox-debug:${SELENIUM_TAG}
         labels:
-        - "traefik.docker.network=${PROJECT_NAME}"
+        - "traefik.docker.network=${PROXY_NETWORK}"
         - "traefik.enable=true"
         - "traefik.port=${SELENIUM_TRAEFIK_PORT}"
         - "traefik.protocol=${SELENIUM_TRAEFIK_PROTOCOL}"
@@ -164,7 +164,7 @@ networks:
         name: ${PROXY_NETWORK}
   internal:
     driver_opts:
-      1_internal: "true"
+      internal: "true"
     driver: bridge
   2_shared:
     driver: bridge

@@ -55,7 +55,7 @@ services:
             # Attaches sample configs if necessary.
             - ${APACHE_TEMP_CONFIGS}
         labels:
-        - "traefik.docker.network=${PROJECT_NAME}"
+        - "traefik.docker.network=${PROXY_NETWORK}"
         - "traefik.enable=true"
         - "traefik.port=${APACHE_TRAEFIK_PORT}"
         - "traefik.protocol=${APACHE_TRAEFIK_PROTOCOL}"
@@ -82,7 +82,7 @@ services:
         # Attach sample configs if necessary.
             - ${NGINX_TEMP_CONFIGS}
         labels:
-        - "traefik.docker.network=${PROJECT_NAME}"
+        - "traefik.docker.network=${PROXY_NETWORK}"
         - "traefik.enable=true"
         - "traefik.port=${NGINX_TRAEFIK_PORT}"
         - "traefik.protocol=${NGINX_TRAEFIK_PROTOCOL}"
@@ -117,7 +117,7 @@ services:
         container_name: "${PROJECT_NAME}-varnish"
         image: akhomy/alpine-varnish:${VARNISH_TAG}
         labels:
-        - "traefik.docker.network=${PROJECT_NAME}"
+        - "traefik.docker.network=${PROXY_NETWORK}"
         - "traefik.enable=true"
         - "traefik.port=${VARNISH_TRAEFIK_PORT}"
         - "traefik.protocol=${VARNISH_TRAEFIK_PROTOCOL}"
@@ -147,7 +147,7 @@ services:
         container_name: "${PROJECT_NAME}-mailhog"
         image: mailhog/mailhog:${MAILHOG_TAG}
         labels:
-        - "traefik.docker.network=${PROJECT_NAME}"
+        - "traefik.docker.network=${PROXY_NETWORK}"
         - "traefik.enable=true"
         - "traefik.port=${MAILHOG_TRAEFIK_PORT}"
         - "traefik.protocol=${MAILHOG_TRAEFIK_PROTOCOL}"
@@ -163,7 +163,7 @@ services:
         container_name: "${PROJECT_NAME}-ngrok"
         image: akhomy/alpine-ngrok:${NGROK_TAG}
         labels:
-        - "traefik.docker.network=${PROJECT_NAME}"
+        - "traefik.docker.network=${PROXY_NETWORK}"
         - "traefik.enable=true"
         - "traefik.port=${NGROK_TRAEFIK_PORT}"
         - "traefik.protocol=${NGROK_TRAEFIK_PROTOCOL}"
@@ -200,7 +200,7 @@ services:
         container_name: "${PROJECT_NAME}-phpmyadmin"
         image: phpmyadmin/phpmyadmin:${PHPMYADMIN_TAG}
         labels:
-        - "traefik.docker.network=${PROJECT_NAME}"
+        - "traefik.docker.network=${PROXY_NETWORK}"
         - "traefik.enable=true"
         - "traefik.port=${PHPMYADMIN_TRAEFIK_PORT}"
         - "traefik.protocol=${PHPMYADMIN_TRAEFIK_PROTOCOL}"
