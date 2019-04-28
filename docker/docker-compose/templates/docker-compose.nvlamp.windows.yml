@@ -83,7 +83,6 @@ services:
         - "traefik.docker.network=${PROXY_NETWORK}"
         - "traefik.enable=true"
         - "traefik.port=${NGINX_TRAEFIK_PORT}"
-        - "traefik.frontend.entryPoints=${NGINX_TRAEFIK_PROTOCOL}"
         - "traefik.protocol=${NGINX_TRAEFIK_PROTOCOL}"
         - "traefik.frontend.rule=Host:${NGINX_TRAEFIK_HOST}"
         environment:
