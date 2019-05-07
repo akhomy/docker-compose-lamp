@@ -1,4 +1,4 @@
-version: "3.5"
+version: "3.7"
 
 services:
 ################ Web Stack.
@@ -14,7 +14,6 @@ services:
         volumes:
             - ./.ssh:/home/www-data/.ssh
             - ./crontasks.txt:/home/crontasks.txt
-            - web:${PHP_FPM_ROOT}:cached
             - web-docker-sync:${PHP_FPM_ROOT}:nocopy
             # Attaches sample configs if necessary.
             - ${PHP_TEMP_CONFIGS}
@@ -50,7 +49,6 @@ services:
         container_name: "${PROJECT_NAME}-apache-mpm"
         image: akhomy/alpine-apache:${APACHE_TAG}
         volumes:
-            - web:${PHP_FPM_ROOT}:cached
             - web-docker-sync:${PHP_FPM_ROOT}:nocopy
             # Attaches sample configs if necessary.
             - ${APACHE_TEMP_CONFIGS}
@@ -77,7 +75,6 @@ services:
         container_name: "${PROJECT_NAME}-nginx"
         image: akhomy/alpine-nginx:${NGINX_TAG}
         volumes:
-            - web:${PHP_FPM_ROOT}:cached
             - web-docker-sync:${PHP_FPM_ROOT}:nocopy
         # Attach sample configs if necessary.
             - ${NGINX_TEMP_CONFIGS}
@@ -188,7 +185,6 @@ services:
         - "traefik.frontend.rule=Host:${SOLR_TRAEFIK_HOST}"
         volumes:
             # Example of drupal solr core configuration. 6.x. Check image tag for correct config.
-            - solr:${SOLR_CORES_PATH}:cached
             - solr-docker-sync:${SOLR_CORES_PATH}:nocopy
         entrypoint:
             - docker-entrypoint.sh
@@ -207,7 +203,6 @@ services:
         image: mysql:${MYSQL_TAG}
         # build: docker/images/mysql/.
         volumes:
-            - mysql:${MYSQL_LIB_PATH}:cached
             - mysql-docker-sync:${MYSQL_LIB_PATH}:nocopy
         environment:
             MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
@@ -228,7 +223,6 @@ services:
             POSTGRES_USER: ${POSTGRES_USER}
             POSTGRES_DB: ${POSTGRES_DB}
         volumes:
-            - postgres:${POSTGRES_LIB_PATH}:cached
             - postgres-docker-sync:${POSTGRES_LIB_PATH}:nocopy
         networks:
             1_internal:
@@ -239,7 +233,6 @@ services:
         container_name: "${PROJECT_NAME}-mongo"
         image: mongo:${MONGO_TAG}
         volumes:
-            - mongo:${MONGO_LIB_PATH}:cached
             - mongo-docker-sync:${MONGO_LIB_PATH}:nocopy
         restart: always
         command: ${MONGO_COMMAND}
@@ -315,36 +308,6 @@ networks:
     driver: bridge
 
 volumes:
-    web:
-        driver: local
-        driver_opts:
-            type: none
-            device: $PWD/${PROJECT_MOUNT}
-            o: bind
-    solr:
-        driver: local
-        driver_opts:
-            type: none
-            device: $PWD/docker/runtime/solr
-            o: bind
-    mysql:
-        driver: local
-        driver_opts:
-            type: none
-            device: $PWD/docker/runtime/mysql
-            o: bind
-    postgres:
-        driver: local
-        driver_opts:
-            type: none
-            device: $PWD/docker/runtime/postgres/data
-            o: bind
-    mongo:
-        driver: local
-        driver_opts:
-            type: none
-            device: $PWD/docker/runtime/mongo
-            o: bind
     web-docker-sync:
         name: "web-${PROJECT_NAME}-docker-sync"
         external: true

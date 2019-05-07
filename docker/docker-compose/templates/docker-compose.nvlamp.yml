@@ -14,7 +14,7 @@ services:
         volumes:
             - ./.ssh:/home/www-data/.ssh
             - ./crontasks.txt:/home/crontasks.txt
-            - web-docker-sync:${PHP_FPM_ROOT}:nocopy
+            - web:${PHP_FPM_ROOT}:cached
             # Attaches sample configs if necessary.
             - ${PHP_TEMP_CONFIGS}
         environment:
@@ -49,7 +49,7 @@ services:
         container_name: "${PROJECT_NAME}-apache-mpm"
         image: akhomy/alpine-apache:${APACHE_TAG}
         volumes:
-            - web-docker-sync:${PHP_FPM_ROOT}:nocopy
+            - web:${PHP_FPM_ROOT}:cached
             # Attaches sample configs if necessary.
             - ${APACHE_TEMP_CONFIGS}
         labels:
@@ -75,7 +75,7 @@ services:
         container_name: "${PROJECT_NAME}-nginx"
         image: akhomy/alpine-nginx:${NGINX_TAG}
         volumes:
-            - web-docker-sync:${PHP_FPM_ROOT}:nocopy
+            - web:${PHP_FPM_ROOT}:cached
         # Attach sample configs if necessary.
             - ${NGINX_TEMP_CONFIGS}
         labels:
@@ -180,7 +180,7 @@ services:
         image: mysql:${MYSQL_TAG}
         # build: docker/images/mysql/.
         volumes:
-            - mysql-docker-sync:${MYSQL_LIB_PATH}:nocopy
+            - mysql:${MYSQL_LIB_PATH}:cached
         environment:
             MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
             MYSQL_USER: ${MYSQL_USER}
@@ -233,9 +233,15 @@ networks:
     driver: bridge
 
 volumes:
-    web-docker-sync:
-        name: "web-${PROJECT_NAME}-docker-sync"
-        external: true
-    mysql-docker-sync:
-        name: "mysql-${PROJECT_NAME}-docker-sync"
-        external: true
+    web:
+        driver: local
+        driver_opts:
+            type: none
+            device: $PWD/${PROJECT_MOUNT}
+            o: bind
+    mysql:
+        driver: local
+        driver_opts:
+            type: none
+            device: $PWD/docker/runtime/mysql
+            o: bind
