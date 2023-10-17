@@ -1,5 +1,8 @@
+# Status
+Archived in favor of other tools.
+
 # Docker Compose Web stack
-Based on the Docker images, built to be fast, small and extendable web stack.
+Based on the Docker images, built to be a fast, small, and extendable web stack.
 
 ## Stack
 * [PHP-FPM](https://github.com/ahomy/alpine-php_fpm)
